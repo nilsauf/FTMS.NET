@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B233E0EF-55C6-48CC-83C1-F72962EF8EEF}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		Directory.Build.Props = Directory.Build.Props
 		LICENSE = LICENSE
 	EndProjectSection
 EndProject
