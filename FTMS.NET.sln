@@ -9,7 +9,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTMS.NET.Contracts", "FTMS.NET.Contracts\FTMS.NET.Contracts.csproj", "{3B09D463-F2C2-4C0A-9F2B-BE16A5CF3C69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTMS.NET", "FTMS.NET\FTMS.NET.csproj", "{6407016E-950F-4AFB-8706-C09F76595C21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTMS.NET.IndoorBike", "FTMS.NET.IndoorBike\FTMS.NET.IndoorBike.csproj", "{D1ACC060-5D73-4A27-9626-7583A9F9465B}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B09D463-F2C2-4C0A-9F2B-BE16A5CF3C69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B09D463-F2C2-4C0A-9F2B-BE16A5CF3C69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B09D463-F2C2-4C0A-9F2B-BE16A5CF3C69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B09D463-F2C2-4C0A-9F2B-BE16A5CF3C69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6407016E-950F-4AFB-8706-C09F76595C21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6407016E-950F-4AFB-8706-C09F76595C21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6407016E-950F-4AFB-8706-C09F76595C21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6407016E-950F-4AFB-8706-C09F76595C21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1ACC060-5D73-4A27-9626-7583A9F9465B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1ACC060-5D73-4A27-9626-7583A9F9465B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1ACC060-5D73-4A27-9626-7583A9F9465B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1ACC060-5D73-4A27-9626-7583A9F9465B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
