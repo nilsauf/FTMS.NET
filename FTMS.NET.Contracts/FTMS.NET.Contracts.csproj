@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<RootNamespace>FTMS.NET</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+  	<PackageReference Include="DynamicData" Version="9.0.4" />
+  </ItemGroup>
+
+</Project>
