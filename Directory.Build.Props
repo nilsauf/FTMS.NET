@@ -28,5 +28,12 @@
   	<IncludeSymbols>true</IncludeSymbols>
   	<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
+
+  <ItemGroup>
+  	<PackageReference Include="Nerdbank.GitVersioning"
+  					  Version="3.7.112"
+  					  PrivateAssets="all"
+  					  Condition="!Exists('packages.config')" />
+  </ItemGroup>
 	
 </Project>
