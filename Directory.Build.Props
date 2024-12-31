@@ -14,7 +14,7 @@
   	<PackageProjectUrl>https://github.com/nilsauf/FTMS.NET</PackageProjectUrl>
   	<PackageIconUrl></PackageIconUrl>
   	<PackageTags>FTMS;Fitness Maschine Service</PackageTags>
-	<!-- <PackageReadmeFile>README.md</PackageReadmeFile> -->
+	<PackageReadmeFile>README.md</PackageReadmeFile>
   	<PackageReleaseNotes>https://github.com/nilsauf/FTMS.NET/releases</PackageReleaseNotes>
   	<RepositoryUrl>https://github.com/nilsauf/FTMS.NET</RepositoryUrl>
   	<RepositoryType>git</RepositoryType>
