@@ -18,6 +18,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTMS.NET", "FTMS.NET\FTMS.N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTMS.NET.IndoorBike", "FTMS.NET.IndoorBike\FTMS.NET.IndoorBike.csproj", "{D1ACC060-5D73-4A27-9626-7583A9F9465B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{6F624991-F164-4486-A138-64019DAF414F}"
+	ProjectSection(SolutionItems) = preProject
+		dependabot.yml = dependabot.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,5 +44,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6F624991-F164-4486-A138-64019DAF414F} = {B233E0EF-55C6-48CC-83C1-F72962EF8EEF}
 	EndGlobalSection
 EndGlobal
