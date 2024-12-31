@@ -1,7 +1,11 @@
 {
-	"$schema": "https://raw.githubusercontent.com/dotnet/Nerdbank.GitVersioning/main/src/NerdBank.GitVersioning/version.schema.json",
-	"version": "0.1.0",
-	"publicReleaseRefSpec": [
-		"^refs/heads/main$"
-	]
+  "$schema": "https://raw.githubusercontent.com/dotnet/Nerdbank.GitVersioning/main/src/NerdBank.GitVersioning/version.schema.json",
+  "version": "0.1.0-alpha",
+    "publicReleaseRefSpec": [
+      "^refs/heads/main$",
+      "^refs/heads/release/v\\d+\\.\\d+\\.\\d+"
+    ],
+  "release": {
+    "branchName": "release/v{version}"
+  }
 }
