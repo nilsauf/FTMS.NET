@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTMS.NET.IndoorBike", "FTMS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{6F624991-F164-4486-A138-64019DAF414F}"
 	ProjectSection(SolutionItems) = preProject
-		dependabot.yml = dependabot.yml
+		.github\dependabot.yml = .github\dependabot.yml
 	EndProjectSection
 EndProject
 Global
