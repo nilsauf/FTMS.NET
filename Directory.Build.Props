@@ -4,6 +4,8 @@
   	<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
   	<ImplicitUsings>enable</ImplicitUsings>
   	<Nullable>enable</Nullable>
+	<IsTestProject>$(MSBuildProjectName.Contains('.Test'))</IsTestProject>
+	<SolutionDir Condition="'$(SolutionDir)' == ''">$(MSBuildThisFileDirectory)</SolutionDir>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -30,7 +32,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-  	<PackageReference Include="Nerdbank.GitVersioning"
+    <None Include="$(MSBuildThisFileDirectory)LICENSE" Pack="true" PackagePath="" />
+	<None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="" Condition="!$(IsTestProject)"/>
+  </ItemGroup>
+	
+  <ItemGroup>
+	<PackageReference Include="Nerdbank.GitVersioning"
   					  Version="3.7.112"
   					  PrivateAssets="all"
   					  Condition="!Exists('packages.config')" />
