@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
-		Directory.Build.Props = Directory.Build.Props
+		Directory.Build.props = Directory.Build.props
 		LICENSE = LICENSE
 		README.md = README.md
 		version.json = version.json
@@ -53,5 +53,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6F624991-F164-4486-A138-64019DAF414F} = {B233E0EF-55C6-48CC-83C1-F72962EF8EEF}
+		{895B4BF3-6DFB-4680-9963-819130322685} = {6F624991-F164-4486-A138-64019DAF414F}
 	EndGlobalSection
 EndGlobal
