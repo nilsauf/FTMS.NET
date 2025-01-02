@@ -1,0 +1,47 @@
+name: testbuild
+
+on:
+  push: 
+    branches: [ main ]
+
+env:
+  configuration: Debug
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET
+      uses: actions/setup-dotnet@v4.1.0
+      with:
+        dotnet-version: | 
+          8.0.x
+          9.0.x
+
+    - name: Restore
+      run: dotnet restore
+      working-directory: .     
+
+    - name: Build
+      run: dotnet build -v:minimal --no-restore -c:${{ env.configuration }} 
+      working-directory: .
+
+    #- name: Run Unit Tests
+    #  run: dotnet test --no-build -c:${{ env.configuration }} -p:CollectCoverage=true -p:CoverletOutputFormat=cobertura -p:CoverletOutput="./artifacts/coverage/coverage.xml" -p:Include="[${{ env.productNamespacePrefix}}*]*"
+    #  working-directory: .
+
+    - name: Pack
+      run: dotnet pack -v:minimal --no-restore --no-build -c:${{ env.configuration }}
+      working-directory: .
+
+    - name: Create NuGet Artifacts
+      uses: actions/upload-artifact@master
+      with:
+        name: nuget
+        path: '**/*.nupkg'
