@@ -58,14 +58,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0       
-    
-    - name: Changelog
-      uses: glennawatson/ChangeLog@v1
-      id: changelog
+    #- name: Checkout
+    #  uses: actions/checkout@v4
+    #  with:
+    #    fetch-depth: 0
+    #
+    #- name: Changelog
+    #  uses: glennawatson/ChangeLog@v1
+    #  id: changelog
 
     #- uses: actions-ecosystem/action-regex-match@v2
     #  id: version-match
@@ -78,17 +78,12 @@ jobs:
       with:
         name: nuget
 
-    - name: Update Release
+    - name: Upload Files
       env:
-        RELEASE_TAG: ${{ github.event.release.tag_name }}
-        RELEASE_BODY: ${{ steps.changelog.outputs.commitLog }}
+        RELEASE_TAG: ${{ github.event.release.id }}
         NUGET_FILES: '**/*.nupkg'
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        gh release edit "$RELEASE_TAG" \
-          --notes="$RELEASE_BODY"
-
-        gh release upload "$RELEASE_TAG" "$NUGET_FILES"
+      run: gh release upload "$RELEASE_TAG" "$NUGET_FILES"
 
     #- name: Create Release
     #  uses: softprops/action-gh-release@v2
