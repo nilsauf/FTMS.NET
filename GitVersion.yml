@@ -1,1 +1,4 @@
 workflow: GitHubFlow/v1
+branches:
+  main:
+    label: 'alpha'
