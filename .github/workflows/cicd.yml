@@ -7,7 +7,7 @@ on:
     types: [ published ]
 
 env:
-  configuration: ${{ github.event.release != NaN && 'Release' || 'Debug' }}
+  configuration: ${{ github.event.release.tag_name != '' && 'Release' || 'Debug' }}
 
 jobs:
   build:
