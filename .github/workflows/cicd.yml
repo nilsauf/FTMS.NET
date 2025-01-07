@@ -1,11 +1,13 @@
-name: testbuild
+name: CICD
 
 on:
   push: 
     branches: [ '**' ]
+  release:
+    types: [ published ]
 
 env:
-  configuration: Debug
+  configuration: ${{ github.release != NaN &&  }}
 
 jobs:
   build:
@@ -20,17 +22,17 @@ jobs:
     - name: Install .NET
       uses: actions/setup-dotnet@v4.1.0
       with:
-        dotnet-version: | 
+        dotnet-version: |
           8.0.x
           9.0.x
 
     - name: Restore
       run: dotnet restore
-      working-directory: .     
+      working-directory: .
 
     - name: Set Release Configuration
       run: echo "$Configuration=Release" >> $GITHUB_ENV
-      if: ${{ startsWith(github.ref, 'refs/heads/release') }}
+      if: ${{ github.release  }}
 
     - name: Build
       run: dotnet build -v:minimal --no-restore -c:${{ env.configuration }} 
@@ -50,8 +52,8 @@ jobs:
         name: nuget
         path: '**/*.nupkg'
 
-  release:
-    if: ${{ startsWith(github.ref, 'refs/heads/release') }}
+  updateRelease:
+    if: ${{ startsWith(github.ref, 'refs/tag') }}
     needs: build
     runs-on: ubuntu-latest
 
@@ -65,28 +67,40 @@ jobs:
       uses: glennawatson/ChangeLog@v1
       id: changelog
 
-    - uses: actions-ecosystem/action-regex-match@v2
-      id: version-match
-      with:
-        text: ${{ github.ref }}
-        regex: '^refs/heads/release/v(\\d+\\.\\d+\\.\\d+)'
+    #- uses: actions-ecosystem/action-regex-match@v2
+    #  id: version-match
+    #  with:
+    #    text: ${{ github.ref }}
+    #    regex: '^refs/tags/[vV]?(\\d+\\.\\d+\\.\\d+)'
     
     - name: Download NuGet Packages
       uses: actions/download-artifact@v4
       with:
-        name: nuget  
+        name: nuget
 
-    - name: Create Release
-      uses: softprops/action-gh-release@v2
-      with:
-        tag_name: ${{ steps.version-match.ouputs.group1 }}
-        body: |
-          ${{ steps.changelog.outputs.commitLog }}
-        files: |
-          ${{ '**/*.nupkg' }}
+    - name: Update Release
+      env:
+        RELEASE_TAG: ${{ github.event.release.tag_name }}
+        RELEASE_BODY: ${{ steps.changelog.outputs.commitLog }}
+        NUGET_FILES: '**/*.nupkg'
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release edit "$RELEASE_TAG" \
+          --notes="$RELEASE_BODY"
+
+        gh release upload "$RELEASE_TAG" "$NUGET_FILES"
+
+    #- name: Create Release
+    #  uses: softprops/action-gh-release@v2
+    #  with:
+    #    tag_name: ${{ steps.version-match.ouputs.group1 }}
+    #    body: |
+    #      ${{ steps.changelog.outputs.commitLog }}
+    #    files: |
+    #      ${{ '**/*.nupkg' }}
      
   publish:
-    if: ${{ startsWith(github.ref, 'refs/heads/release') || github.ref == 'refs/heads/main' }}
+    if: ${{ startsWith(github.ref, 'refs/heads/release') || github.ref == 'refs/heads/main' || github.event.release }}
     needs: build
     runs-on: ubuntu-latest
     
