@@ -7,7 +7,7 @@ on:
     types: [ published ]
 
 env:
-  configuration: ${{ github.release != NaN &&  }}
+  configuration: ${{ github.release != false && 'Release' || 'Debug' }}
 
 jobs:
   build:
@@ -30,9 +30,9 @@ jobs:
       run: dotnet restore
       working-directory: .
 
-    - name: Set Release Configuration
-      run: echo "$Configuration=Release" >> $GITHUB_ENV
-      if: ${{ github.release  }}
+    #- name: Set Release Configuration
+    #  run: echo "$Configuration=Release" >> $GITHUB_ENV
+    #  if: ${{ github.release }}
 
     - name: Build
       run: dotnet build -v:minimal --no-restore -c:${{ env.configuration }} 
