@@ -37,10 +37,7 @@
   </ItemGroup>
 	
   <ItemGroup>
-	<PackageReference Include="Nerdbank.GitVersioning"
-  					  Version="3.7.112"
-  					  PrivateAssets="all"
-  					  Condition="!Exists('packages.config')" />
+	  <PackageReference Include="GitVersion.MsBuild" Version="6.1.0" PrivateAssets="all" />
   </ItemGroup>
 	
 </Project>
