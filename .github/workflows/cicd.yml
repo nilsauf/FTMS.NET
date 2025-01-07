@@ -7,7 +7,7 @@ on:
     types: [ published ]
 
 env:
-  configuration: ${{ github.release != false && 'Release' || 'Debug' }}
+  configuration: ${{ github.event.release != NaN && 'Release' || 'Debug' }}
 
 jobs:
   build:
@@ -53,7 +53,7 @@ jobs:
         path: '**/*.nupkg'
 
   updateRelease:
-    if: ${{ startsWith(github.ref, 'refs/tag') }}
+    if: github.event.release
     needs: build
     runs-on: ubuntu-latest
 
