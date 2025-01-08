@@ -29,6 +29,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\cicd.yml = .github\workflows\cicd.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{A37B17AA-A497-4F41-8C05-9315650D06B1}"
+	ProjectSection(SolutionItems) = preProject
+		docs\FTMS_v1.0-1.pdf = docs\FTMS_v1.0-1.pdf
+		docs\GATT_Specification_Supplement.pdf = docs\GATT_Specification_Supplement.pdf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +60,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{6F624991-F164-4486-A138-64019DAF414F} = {B233E0EF-55C6-48CC-83C1-F72962EF8EEF}
 		{895B4BF3-6DFB-4680-9963-819130322685} = {6F624991-F164-4486-A138-64019DAF414F}
+		{A37B17AA-A497-4F41-8C05-9315650D06B1} = {B233E0EF-55C6-48CC-83C1-F72962EF8EEF}
 	EndGlobalSection
 EndGlobal
