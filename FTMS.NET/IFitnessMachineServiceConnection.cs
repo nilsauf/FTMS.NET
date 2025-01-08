@@ -2,10 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-using FTMS.NET.Data;
-
-public interface IFitnessMachineServiceConnection<TFitnessMachineData>
-	where TFitnessMachineData : FitnessMachineData<TFitnessMachineData>
+public interface IFitnessMachineServiceConnection
 {
 	byte[] ServiceData { get; }
 	IObservable<byte[]> DataObservable { get; }

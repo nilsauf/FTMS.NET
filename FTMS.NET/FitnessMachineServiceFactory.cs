@@ -1,21 +1,20 @@
 ﻿namespace FTMS.NET;
-using System;
-
 using FTMS.NET.Control;
 using FTMS.NET.Data;
 using FTMS.NET.Exceptions;
 using FTMS.NET.State;
 using FTMS.NET.Utils;
+using System;
 
 public static class FitnessMachineService
 {
 	public static IFitnessMachineService<TFitnessMachineData> Create<TFitnessMachineData>(
-		IFitnessMachineServiceConnection<TFitnessMachineData> connection)
+		IFitnessMachineServiceConnection connection)
 		where TFitnessMachineData : FitnessMachineData<TFitnessMachineData>
 	{
 		CheckAvailability();
 
-		TFitnessMachineData data = CreateFitnessMachineData(connection);
+		TFitnessMachineData data = CreateFitnessMachineData<TFitnessMachineData>(connection);
 		//CheckType();
 
 		FitnessMachineControl control = new(connection.ControlPointObservable, connection.WriteToControlPoint);
@@ -43,7 +42,7 @@ public static class FitnessMachineService
 	}
 
 	public static TFitnessMachineData CreateFitnessMachineData<TFitnessMachineData>(
-		IFitnessMachineServiceConnection<TFitnessMachineData> connection)
+		IFitnessMachineServiceConnection connection)
 		where TFitnessMachineData : FitnessMachineData<TFitnessMachineData>
 	{
 		try
