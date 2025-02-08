@@ -2,7 +2,7 @@
 public enum EStateOpCode
 {
 	Reset = 0x01,
-	FitnessMachineStoppedOrPausedBytheUser = 0x02,
+	FitnessMachineStoppedOrPausedByTheUser = 0x02,
 	FitnessMachineStoppedBySafetyKey = 0x03,
 	FitnessMachineStartedOrResumedByTheUser = 0x04,
 	TargetSpeedChanged = 0x05,
