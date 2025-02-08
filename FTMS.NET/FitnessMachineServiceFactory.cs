@@ -5,6 +5,7 @@ using FTMS.NET.Exceptions;
 using FTMS.NET.State;
 using FTMS.NET.Utils;
 using System;
+using System.Numerics;
 
 public static class FitnessMachineService
 {
@@ -15,7 +16,7 @@ public static class FitnessMachineService
 		CheckAvailability();
 
 		TFitnessMachineData data = CreateFitnessMachineData<TFitnessMachineData>(connection);
-		//CheckType();
+		CheckType();
 
 		FitnessMachineControl control = new(connection.ControlPointObservable, connection.WriteToControlPoint);
 		FitnessMachineStateProvider stateProvider = new(connection.StateObservable);
@@ -29,14 +30,15 @@ public static class FitnessMachineService
 				throw new FitnessMachineNotAvailableException();
 		}
 
-		//void CheckType()
-		//{
-		//	EFitnessMachineType serviceType = ReadType();
-		//	if (serviceType != data.Type)
-		//		throw new InvalidOperationException();
-		//}
+		void CheckType()
+		{
+			EFitnessMachineType serviceType = ReadType();
+			if (serviceType != data.Type)
+				throw new InvalidOperationException();
+		}
 
-		//EFitnessMachineType ReadType() => (EFitnessMachineType)BitConverter.ToUInt16([.. serviceData[3..]]);
+		EFitnessMachineType ReadType()
+			=> (EFitnessMachineType)BitOperations.TrailingZeroCount(BitConverter.ToUInt16(connection.ServiceData.AsSpan()[3..]));
 
 
 	}
