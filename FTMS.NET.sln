@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTMS.NET.Contracts", "FTMS.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTMS.NET", "FTMS.NET\FTMS.NET.csproj", "{6407016E-950F-4AFB-8706-C09F76595C21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTMS.NET.IndoorBike", "FTMS.NET.IndoorBike\FTMS.NET.IndoorBike.csproj", "{D1ACC060-5D73-4A27-9626-7583A9F9465B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{6F624991-F164-4486-A138-64019DAF414F}"
 	ProjectSection(SolutionItems) = preProject
 		.github\dependabot.yml = .github\dependabot.yml
@@ -49,10 +47,6 @@ Global
 		{6407016E-950F-4AFB-8706-C09F76595C21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6407016E-950F-4AFB-8706-C09F76595C21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6407016E-950F-4AFB-8706-C09F76595C21}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D1ACC060-5D73-4A27-9626-7583A9F9465B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1ACC060-5D73-4A27-9626-7583A9F9465B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1ACC060-5D73-4A27-9626-7583A9F9465B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1ACC060-5D73-4A27-9626-7583A9F9465B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

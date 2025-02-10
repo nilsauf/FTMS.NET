@@ -1,27 +1,32 @@
 ﻿namespace FTMS.NET;
-using System.Threading.Tasks;
-
 using FTMS.NET.Control;
 using FTMS.NET.Data;
 using FTMS.NET.State;
+using System.Threading.Tasks;
 
-internal class FitnessMachineService<TFitnessMachineData>(
-	TFitnessMachineData data,
-	IFitnessMachineControl control,
-	IFitnessMachineStateProvider stateProvider)
-	: IFitnessMachineService<TFitnessMachineData>
-	where TFitnessMachineData : FitnessMachineData<TFitnessMachineData>
+public sealed partial class FitnessMachineService : IFitnessMachineService, IDisposable
 {
-	public TFitnessMachineData Data { get; } = data;
-	public IFitnessMachineControl Control { get; } = control;
-	public IFitnessMachineStateProvider State { get; } = stateProvider;
+	private readonly FitnessMachineData data;
+	private readonly FitnessMachineControl control;
+	private readonly FitnessMachineStateProvider stateProvider;
 
-	IFitnessMachineData IFitnessMachineService.Data => this.Data;
+	public IFitnessMachineData Data => this.data;
+	public IFitnessMachineControl Control => this.control;
+	public IFitnessMachineStateProvider State => this.stateProvider;
+
+	private FitnessMachineService(
+		FitnessMachineData data,
+		FitnessMachineControl control,
+		FitnessMachineStateProvider stateProvider)
+	{
+		this.data = data;
+		this.control = control;
+		this.stateProvider = stateProvider;
+	}
 
 	public Task<ControlResponse> Execute(ControlRequest request)
 	{
 		ArgumentNullException.ThrowIfNull(request);
-
 		return this.Control.Execute(request);
 	}
 
@@ -30,9 +35,8 @@ internal class FitnessMachineService<TFitnessMachineData>(
 
 	public void Dispose()
 	{
-		this.Data.Dispose();
-		this.Control.Dispose();
-		this.State.Dispose();
-		GC.SuppressFinalize(this);
+		this.data.Dispose();
+		this.control.Dispose();
+		this.stateProvider.Dispose();
 	}
 }

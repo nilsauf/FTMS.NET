@@ -1,7 +1,7 @@
 ﻿namespace FTMS.NET.Control;
 using System.Threading.Tasks;
 
-public interface IFitnessMachineControl : IDisposable
+public interface IFitnessMachineControl
 {
 	Task<ControlResponse> Execute(ControlRequest request);
 }

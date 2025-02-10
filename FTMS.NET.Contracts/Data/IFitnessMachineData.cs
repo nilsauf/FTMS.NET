@@ -2,10 +2,9 @@
 
 using DynamicData;
 
-using FTMS.NET;
-
-public interface IFitnessMachineData : IDisposable
+public interface IFitnessMachineData
 {
-	EFitnessMachineType Type { get; }
 	IObservable<IChangeSet<IFitnessMachineValue, Guid>> Connect();
+
+	IFitnessMachineValue? GetValue(Guid uuid);
 }

@@ -1,7 +1,7 @@
 ﻿namespace FTMS.NET.State;
 using System;
 
-public interface IFitnessMachineStateProvider : IDisposable
+public interface IFitnessMachineStateProvider
 {
 	IObservable<IFitnessMachineState> Connect();
 }
