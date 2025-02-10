@@ -1,4 +1,6 @@
 ﻿namespace FTMS.NET.Control;
+using FTMS.NET.Exceptions;
+using FTMS.NET.Utils;
 using System;
 using System.Linq;
 using System.Reactive.Concurrency;
@@ -6,8 +8,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
-
-using FTMS.NET.Utils;
 
 internal sealed class FitnessMachineControl : IFitnessMachineControl
 {
@@ -32,14 +32,22 @@ internal sealed class FitnessMachineControl : IFitnessMachineControl
 			.ToTask();
 
 		byte[] writeValue = [(byte)request.OpCode, .. request.Parameter];
-		await this.writeControlPoint(writeValue);
 
-		var response = await responseTask;
+		try
+		{
+			await this.writeControlPoint(writeValue);
 
-		if (response.ResultCode == EControlResultCode.Success)
-			return response;
+			var response = await responseTask;
 
-		throw new Exception(response.ResultCode.ToString());
+			if (response.ResultCode == EControlResultCode.Success)
+				return response;
+
+			throw new ControlRequestException(request.OpCode, response.ResultCode);
+		}
+		catch (Exception ex)
+		{
+			throw new ControlRequestException(request.OpCode, ex);
+		}
 	}
 
 	private ControlResponse ReadResponseData(byte[] data)
