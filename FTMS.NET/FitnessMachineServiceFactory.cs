@@ -36,7 +36,7 @@ public static class FitnessMachineService
 	{
 		var fitnessMaschineType = ReadType();
 		var dataCharacteristicId = GetDataCharacteristicId();
-		var dataObservable = await connection.GetCharacteristicAsync(dataCharacteristicId);
+		var dataCharacteristic = await connection.GetCharacteristicAsync(dataCharacteristicId);
 
 		var fitnessMaschineData = TryCreateData();
 
@@ -62,7 +62,7 @@ public static class FitnessMachineService
 		{
 			try
 			{
-				return Activator.CreateInstance(typeof(TFitnessMachineData), dataObservable)
+				return Activator.CreateInstance(typeof(TFitnessMachineData), dataCharacteristic.ObserveValue())
 					as TFitnessMachineData ?? throw new NullReferenceException();
 			}
 			catch (Exception ex)
