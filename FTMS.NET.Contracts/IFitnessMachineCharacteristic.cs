@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-public interface IFitnessMaschineCharacteristic
+public interface IFitnessMachineCharacteristic
 {
 	public Guid Id { get; }
 

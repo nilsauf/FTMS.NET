@@ -1,5 +1,5 @@
 ﻿namespace FTMS.NET;
-public enum FitnessMaschineUnit
+public enum FitnessMachineUnit
 {
 	None,
 	KilometersPerHour,

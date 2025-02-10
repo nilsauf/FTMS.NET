@@ -6,5 +6,5 @@ public interface IFitnessMachineServiceConnection
 {
 	byte[] ServiceData { get; }
 
-	Task<IFitnessMaschineCharacteristic> GetCharacteristicAsync(Guid id);
+	Task<IFitnessMachineCharacteristic> GetCharacteristicAsync(Guid id);
 }
