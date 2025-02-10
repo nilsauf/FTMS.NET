@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 public interface IFitnessMachineServiceConnection
 {
 	byte[] ServiceData { get; }
-	IObservable<byte[]> DataObservable { get; }
-	IObservable<byte[]> StateObservable { get; }
-	IObservable<byte[]> ControlPointObservable { get; }
-	Func<byte[], Task> WriteToControlPoint { get; }
+
+	Task<IFitnessMaschineCharacteristic> GetCharacteristicAsync(Guid id);
 }

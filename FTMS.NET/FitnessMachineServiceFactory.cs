@@ -9,17 +9,16 @@ using System.Numerics;
 
 public static class FitnessMachineService
 {
-	public static IFitnessMachineService<TFitnessMachineData> Create<TFitnessMachineData>(
+	public static async Task<IFitnessMachineService<TFitnessMachineData>> CreateAsync<TFitnessMachineData>(
 		IFitnessMachineServiceConnection connection)
 		where TFitnessMachineData : FitnessMachineData<TFitnessMachineData>
 	{
 		CheckAvailability();
 
-		TFitnessMachineData data = CreateFitnessMachineData<TFitnessMachineData>(connection);
-		CheckType();
+		TFitnessMachineData data = await CreateFitnessMachineDataAsync<TFitnessMachineData>(connection);
 
-		FitnessMachineControl control = new(connection.ControlPointObservable, connection.WriteToControlPoint);
-		FitnessMachineStateProvider stateProvider = new(connection.StateObservable);
+		IFitnessMachineControl control = await CreateFitnessMachineControlAsync(connection);
+		IFitnessMachineStateProvider stateProvider = await CreateFitnessMachineStateProviderAsync(connection);
 
 		return new FitnessMachineService<TFitnessMachineData>(data, control, stateProvider);
 
@@ -29,32 +28,69 @@ public static class FitnessMachineService
 			if (available == false)
 				throw new FitnessMachineNotAvailableException();
 		}
+	}
 
-		void CheckType()
-		{
-			EFitnessMachineType serviceType = ReadType();
-			if (serviceType != data.Type)
-				throw new InvalidOperationException();
-		}
+	public static async Task<TFitnessMachineData> CreateFitnessMachineDataAsync<TFitnessMachineData>(
+		IFitnessMachineServiceConnection connection)
+		where TFitnessMachineData : FitnessMachineData<TFitnessMachineData>
+	{
+		var fitnessMaschineType = ReadType();
+		var dataCharacteristicId = GetDataCharacteristicId();
+		var dataObservable = await connection.GetCharacteristicAsync(dataCharacteristicId);
+
+		var fitnessMaschineData = TryCreateData();
+
+		CheckType();
+
+		return fitnessMaschineData;
 
 		EFitnessMachineType ReadType()
 			=> (EFitnessMachineType)BitOperations.TrailingZeroCount(BitConverter.ToUInt16(connection.ServiceData.AsSpan()[3..]));
 
+		Guid GetDataCharacteristicId() => fitnessMaschineType switch
+		{
+			EFitnessMachineType.Threadmill => throw new NotImplementedException(),
+			EFitnessMachineType.CrossTrainer => throw new NotImplementedException(),
+			EFitnessMachineType.StepClimber => throw new NotImplementedException(),
+			EFitnessMachineType.StairClimber => throw new NotImplementedException(),
+			EFitnessMachineType.Rower => throw new NotImplementedException(),
+			EFitnessMachineType.IndoorBike => FtmsUuids.IndoorBikeData,
+			_ => throw new InvalidOperationException()
+		};
 
+		TFitnessMachineData TryCreateData()
+		{
+			try
+			{
+				return Activator.CreateInstance(typeof(TFitnessMachineData), dataObservable)
+					as TFitnessMachineData ?? throw new NullReferenceException();
+			}
+			catch (Exception ex)
+			{
+				throw new FitnessMachineDataCreationException(ex);
+			}
+		}
+
+		void CheckType()
+		{
+			if (fitnessMaschineType != fitnessMaschineData.Type)
+				throw new InvalidOperationException();
+		}
 	}
 
-	public static TFitnessMachineData CreateFitnessMachineData<TFitnessMachineData>(
+	public static async Task<IFitnessMachineControl> CreateFitnessMachineControlAsync(
 		IFitnessMachineServiceConnection connection)
-		where TFitnessMachineData : FitnessMachineData<TFitnessMachineData>
 	{
-		try
-		{
-			return Activator.CreateInstance(typeof(TFitnessMachineData), connection.DataObservable)
-				as TFitnessMachineData ?? throw new NullReferenceException();
-		}
-		catch (Exception ex)
-		{
-			throw new FitnessMachineDataCreationException(ex);
-		}
+		var controlPointCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.ControlPoint);
+		return new FitnessMachineControl(
+			controlPointCharacteristic.ObserveValue(),
+			controlPointCharacteristic.WriteValueAsync);
+	}
+
+	public static async Task<IFitnessMachineStateProvider> CreateFitnessMachineStateProviderAsync(
+		IFitnessMachineServiceConnection connection)
+	{
+		var stateCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.State);
+		return new FitnessMachineStateProvider(stateCharacteristic.ObserveValue());
 	}
 }
