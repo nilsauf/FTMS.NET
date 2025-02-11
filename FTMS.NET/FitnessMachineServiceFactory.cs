@@ -33,51 +33,37 @@ public partial class FitnessMachineService
 		IFitnessMachineServiceConnection connection)
 	{
 		var fitnessMaschineType = ReadType();
-		var dataReaderType = GetDataReaderType();
 		var dataCharacteristicId = GetDataCharacteristicId();
 		var dataCharacteristic = await connection.GetCharacteristicAsync(dataCharacteristicId);
 
-		var fitnessMaschineDataReader = TryCreateDataReader();
+		var fitnessMaschineDataReader = GetDataReader();
 
 		return new FitnessMachineData(dataCharacteristic.ObserveValue(), fitnessMaschineDataReader);
 
 		EFitnessMachineType ReadType()
 			=> (EFitnessMachineType)BitOperations.TrailingZeroCount(BitConverter.ToUInt16(connection.ServiceData.AsSpan()[3..]));
 
-		Type GetDataReaderType() => fitnessMaschineType switch
+		FitnessMachineDataReader GetDataReader() => fitnessMaschineType switch
 		{
 			EFitnessMachineType.Threadmill => throw new NotImplementedException(),
 			EFitnessMachineType.CrossTrainer => throw new NotImplementedException(),
 			EFitnessMachineType.StepClimber => throw new NotImplementedException(),
 			EFitnessMachineType.StairClimber => throw new NotImplementedException(),
 			EFitnessMachineType.Rower => throw new NotImplementedException(),
-			EFitnessMachineType.IndoorBike => typeof(IndoorBikeDataReader),
+			EFitnessMachineType.IndoorBike => new IndoorBikeDataReader(),
 			_ => throw new InvalidOperationException()
 		};
 
 		Guid GetDataCharacteristicId() => fitnessMaschineType switch
 		{
-			EFitnessMachineType.Threadmill => throw new NotImplementedException(),
-			EFitnessMachineType.CrossTrainer => throw new NotImplementedException(),
-			EFitnessMachineType.StepClimber => throw new NotImplementedException(),
-			EFitnessMachineType.StairClimber => throw new NotImplementedException(),
-			EFitnessMachineType.Rower => throw new NotImplementedException(),
+			EFitnessMachineType.Threadmill => FtmsUuids.TreadmillData,
+			EFitnessMachineType.CrossTrainer => FtmsUuids.CrossTrainerData,
+			EFitnessMachineType.StepClimber => FtmsUuids.StepClimberData,
+			EFitnessMachineType.StairClimber => FtmsUuids.StairClimberData,
+			EFitnessMachineType.Rower => FtmsUuids.RowerData,
 			EFitnessMachineType.IndoorBike => FtmsUuids.IndoorBikeData,
 			_ => throw new InvalidOperationException()
 		};
-
-		FitnessMachineDataReader TryCreateDataReader()
-		{
-			try
-			{
-				return Activator.CreateInstance(dataReaderType)
-					as FitnessMachineDataReader ?? throw new NullReferenceException();
-			}
-			catch (Exception ex)
-			{
-				throw new FitnessMachineDataCreationException(ex);
-			}
-		}
 	}
 
 	private static async Task<FitnessMachineControl> CreateFitnessMachineControlAsync(
