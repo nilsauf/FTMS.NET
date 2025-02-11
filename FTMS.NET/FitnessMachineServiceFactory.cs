@@ -3,6 +3,7 @@ using FTMS.NET.Control;
 using FTMS.NET.Data;
 using FTMS.NET.Data.Reader;
 using FTMS.NET.Exceptions;
+using FTMS.NET.Features;
 using FTMS.NET.State;
 using FTMS.NET.Utils;
 using System;
@@ -18,8 +19,9 @@ public partial class FitnessMachineService
 		FitnessMachineData data = await CreateFitnessMachineDataAsync(connection);
 		FitnessMachineControl control = await CreateFitnessMachineControlAsync(connection);
 		FitnessMachineStateProvider stateProvider = await CreateFitnessMachineStateProviderAsync(connection);
+		FitnessMachineFeatures features = await ReadFeatures(connection);
 
-		return new FitnessMachineService(data, control, stateProvider);
+		return new FitnessMachineService(data, control, stateProvider, features);
 
 		void CheckAvailability()
 		{
@@ -84,5 +86,15 @@ public partial class FitnessMachineService
 			machineStateCharacteristic.ObserveValue(),
 			trainingStateCharacteristic.ObserveValue(),
 			trainingStateCharacteristic.ReadValueAsync);
+	}
+
+	private static async Task<FitnessMachineFeatures> ReadFeatures(
+		IFitnessMachineServiceConnection connection)
+	{
+		var featureCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.Feature);
+		var featureData = await featureCharacteristic.ReadValueAsync();
+		var featureDataSpan = featureData.AsSpan();
+
+		return new FitnessMachineFeatures(featureDataSpan[..4], featureDataSpan[5..]);
 	}
 }

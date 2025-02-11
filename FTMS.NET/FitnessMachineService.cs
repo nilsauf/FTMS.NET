@@ -1,6 +1,7 @@
 ﻿namespace FTMS.NET;
 using FTMS.NET.Control;
 using FTMS.NET.Data;
+using FTMS.NET.Features;
 using FTMS.NET.State;
 using System.Threading.Tasks;
 
@@ -13,15 +14,18 @@ public sealed partial class FitnessMachineService : IFitnessMachineService, IDis
 	public IFitnessMachineData Data => this.data;
 	public IFitnessMachineControl Control => this.control;
 	public IFitnessMachineStateProvider State => this.stateProvider;
+	public IFitnessMachineFeatures Features { get; }
 
 	private FitnessMachineService(
 		FitnessMachineData data,
 		FitnessMachineControl control,
-		FitnessMachineStateProvider stateProvider)
+		FitnessMachineStateProvider stateProvider,
+		IFitnessMachineFeatures features)
 	{
 		this.data = data;
 		this.control = control;
 		this.stateProvider = stateProvider;
+		this.Features = features;
 	}
 
 	public Task<ControlResponse> Execute(ControlRequest request)
