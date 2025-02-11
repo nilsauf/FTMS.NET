@@ -8,8 +8,22 @@ public static class FtmsUuids
 	private static readonly FrozenDictionary<Guid, string> allFieldsByUuid;
 
 	public readonly static Guid Service = Guid.ParseExact("00001826-0000-1000-8000-00805f9b34fb", "d");
-	public readonly static Guid State = Guid.ParseExact("00002ada-0000-1000-8000-00805f9b34fb", "d");
+	public readonly static Guid Feature = Guid.ParseExact("00002acc-0000-1000-8000-00805f9b34fb", "d");
+	public readonly static Guid MachineState = Guid.ParseExact("00002ada-0000-1000-8000-00805f9b34fb", "d");
+	public readonly static Guid TrainingState = Guid.ParseExact("00002ad3-0000-1000-8000-00805f9b34fb", "d");
 	public readonly static Guid ControlPoint = Guid.ParseExact("00002ad9-0000-1000-8000-00805f9b34fb", "d");
+
+	public readonly static Guid SupportedSpeedRange = Guid.ParseExact("00002ad4-0000-1000-8000-00805f9b34fb", "d");
+	public readonly static Guid SupportedInclinationRange = Guid.ParseExact("00002ad5-0000-1000-8000-00805f9b34fb", "d");
+	public readonly static Guid SupportedResistanceLevelRange = Guid.ParseExact("00002ad6-0000-1000-8000-00805f9b34fb", "d");
+	public readonly static Guid SupportedPowerRange = Guid.ParseExact("00002ad8-0000-1000-8000-00805f9b34fb", "d");
+	public readonly static Guid SupportedHeartRateRange = Guid.ParseExact("00002ad7-0000-1000-8000-00805f9b34fb", "d");
+
+	public readonly static Guid TreadmillData = Guid.ParseExact("00002acd-0000-1000-8000-00805f9b34fb", "d");
+	public readonly static Guid CrossTrainerData = Guid.ParseExact("00002ace-0000-1000-8000-00805f9b34fb", "d");
+	public readonly static Guid StepClimberData = Guid.ParseExact("00002acf-0000-1000-8000-00805f9b34fb", "d");
+	public readonly static Guid StairClimberData = Guid.ParseExact("00002ad0-0000-1000-8000-00805f9b34fb", "d");
+	public readonly static Guid RowerData = Guid.ParseExact("00002ad1-0000-1000-8000-00805f9b34fb", "d");
 	public readonly static Guid IndoorBikeData = Guid.ParseExact("00002ad2-0000-1000-8000-00805f9b34fb", "d");
 
 	public static class IndoorBike
