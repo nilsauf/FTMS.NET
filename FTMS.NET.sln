@@ -29,6 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{A37B17AA-A497-4F41-8C05-9315650D06B1}"
 	ProjectSection(SolutionItems) = preProject
+		docs\Assigned_Numbers.pdf = docs\Assigned_Numbers.pdf
 		docs\FTMS_v1.0-1.pdf = docs\FTMS_v1.0-1.pdf
 		docs\GATT_Specification_Supplement.pdf = docs\GATT_Specification_Supplement.pdf
 	EndProjectSection
