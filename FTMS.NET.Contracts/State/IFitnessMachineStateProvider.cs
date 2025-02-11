@@ -3,5 +3,6 @@ using System;
 
 public interface IFitnessMachineStateProvider
 {
-	IObservable<IFitnessMachineState> Connect();
+	IObservable<IFitnessMachineState> ObserveMachineState();
+	IObservable<ITrainingState> ObserveTrainingState();
 }

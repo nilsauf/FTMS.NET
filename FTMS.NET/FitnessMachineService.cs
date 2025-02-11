@@ -30,8 +30,11 @@ public sealed partial class FitnessMachineService : IFitnessMachineService, IDis
 		return this.Control.Execute(request);
 	}
 
-	public IObservable<IFitnessMachineState> Connect()
-		=> this.State.Connect();
+	public IObservable<IFitnessMachineState> ObserveMachineState()
+		=> this.State.ObserveMachineState();
+
+	public IObservable<ITrainingState> ObserveTrainingState()
+		=> this.State.ObserveTrainingState();
 
 	public void Dispose()
 	{

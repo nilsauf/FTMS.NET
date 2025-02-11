@@ -92,7 +92,11 @@ public partial class FitnessMachineService
 	private static async Task<FitnessMachineStateProvider> CreateFitnessMachineStateProviderAsync(
 		IFitnessMachineServiceConnection connection)
 	{
-		var stateCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.State);
-		return new FitnessMachineStateProvider(stateCharacteristic.ObserveValue());
+		var machineStateCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.MachineState);
+		var trainingStateCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.TrainingState);
+		return new FitnessMachineStateProvider(
+			machineStateCharacteristic.ObserveValue(),
+			trainingStateCharacteristic.ObserveValue(),
+			trainingStateCharacteristic.ReadValueAsync);
 	}
 }
