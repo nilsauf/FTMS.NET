@@ -4,10 +4,8 @@ using FTMS.NET.Control;
 using System;
 
 public class ControlRequestException(EControlOpCode opCode, Exception? innerException = null)
-	: Exception(ExceptionMessage, innerException)
+	: Exception("Control Request could not be executed.", innerException)
 {
-	private const string ExceptionMessage = "Control Request could not be executed.";
-
 	public EControlOpCode OpCode { get; } = opCode;
 	public EControlResultCode? ResultCode { get; }
 

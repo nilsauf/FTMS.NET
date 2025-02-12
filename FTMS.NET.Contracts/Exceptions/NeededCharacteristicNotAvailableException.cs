@@ -4,7 +4,7 @@ using System;
 
 public sealed class NeededCharacteristicNotAvailableException(
 	Guid characteristicUuid)
-	: Exception
+	: Exception("The needed characteristic is not available.")
 {
 	public string CharacteristicName { get; } = FtmsUuids.GetName(characteristicUuid);
 	public Guid CharacteristicUuid { get; } = characteristicUuid;
