@@ -7,6 +7,7 @@ using FTMS.NET.Features;
 using FTMS.NET.State;
 using FTMS.NET.Utils;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 
 public partial class FitnessMachineService
@@ -16,10 +17,10 @@ public partial class FitnessMachineService
 	{
 		CheckAvailability();
 
+		FitnessMachineFeatures features = await ReadFitnessMachineFeatures(connection);
 		FitnessMachineData data = await CreateFitnessMachineDataAsync(connection);
 		FitnessMachineControl control = await CreateFitnessMachineControlAsync(connection);
 		FitnessMachineStateProvider stateProvider = await CreateFitnessMachineStateProviderAsync(connection);
-		FitnessMachineFeatures features = await ReadFeatures(connection);
 
 		return new FitnessMachineService(data, control, stateProvider, features);
 
@@ -40,6 +41,7 @@ public partial class FitnessMachineService
 
 		var fitnessMaschineDataReader = GetDataReader();
 
+		EnsureNotNull(dataCharacteristic, dataCharacteristicId);
 		return new FitnessMachineData(dataCharacteristic.ObserveValue(), fitnessMaschineDataReader);
 
 		EFitnessMachineType ReadType()
@@ -72,6 +74,7 @@ public partial class FitnessMachineService
 		IFitnessMachineServiceConnection connection)
 	{
 		var controlPointCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.ControlPoint);
+		EnsureNotNull(controlPointCharacteristic, FtmsUuids.ControlPoint);
 		return new FitnessMachineControl(
 			controlPointCharacteristic.ObserveValue(),
 			controlPointCharacteristic.WriteValueAsync);
@@ -82,19 +85,32 @@ public partial class FitnessMachineService
 	{
 		var machineStateCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.MachineState);
 		var trainingStateCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.TrainingState);
+
+		EnsureNotNull(machineStateCharacteristic, FtmsUuids.MachineState);
+		trainingStateCharacteristic ??= new ThrowingCharacteristic(FtmsUuids.TrainingState);
 		return new FitnessMachineStateProvider(
 			machineStateCharacteristic.ObserveValue(),
 			trainingStateCharacteristic.ObserveValue(),
 			trainingStateCharacteristic.ReadValueAsync);
 	}
 
-	private static async Task<FitnessMachineFeatures> ReadFeatures(
+	private static async Task<FitnessMachineFeatures> ReadFitnessMachineFeatures(
 		IFitnessMachineServiceConnection connection)
 	{
 		var featureCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.Feature);
+		EnsureNotNull(featureCharacteristic, FtmsUuids.Feature);
+
 		var featureData = await featureCharacteristic.ReadValueAsync();
 		var featureDataSpan = featureData.AsSpan();
 
 		return new FitnessMachineFeatures(featureDataSpan[..4], featureDataSpan[5..]);
+	}
+
+	private static void EnsureNotNull(
+		[NotNull] IFitnessMachineCharacteristic? characteristic,
+		Guid characteristicUuid)
+	{
+		if (characteristic is null)
+			throw new NeededCharacteristicNotAvailableException(characteristicUuid);
 	}
 }

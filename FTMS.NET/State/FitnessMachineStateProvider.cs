@@ -15,8 +15,8 @@ internal sealed class FitnessMachineStateProvider : IFitnessMachineStateProvider
 
 	public FitnessMachineStateProvider(
 		IObservable<byte[]> observeMachineState,
-		IObservable<byte[]> observeTrainingState,
-		Func<Task<byte[]>> readTrainingStateAsync)
+		IObservable<byte[]>? observeTrainingState,
+		Func<Task<byte[]>>? readTrainingStateAsync)
 	{
 		this.machineStateObservable = observeMachineState
 			.TakeUntil(this.cancellationDisposable.Token)
@@ -24,13 +24,14 @@ internal sealed class FitnessMachineStateProvider : IFitnessMachineStateProvider
 			.Publish()
 			.RefCount();
 
-		this.trainingStateObservable = observeTrainingState
+		this.trainingStateObservable = observeTrainingState?
 			.TakeUntil(this.cancellationDisposable.Token)
 			.SelectMany(this.ReadTrainingStateDataAsync)
 			.Publish()
-			.RefCount();
+			.RefCount()
+			?? Observable.Throw<ITrainingState>(new InvalidOperationException());
 
-		this.readTrainingStateAsync = readTrainingStateAsync;
+		this.readTrainingStateAsync = readTrainingStateAsync ?? ThrowOnExecute;
 	}
 
 	public IObservable<IFitnessMachineState> ObserveMachineState() => this.machineStateObservable.AsObservable();
@@ -64,4 +65,6 @@ internal sealed class FitnessMachineStateProvider : IFitnessMachineStateProvider
 	}
 
 	public void Dispose() => this.cancellationDisposable.Dispose();
+
+	private static Task<byte[]> ThrowOnExecute() => throw new InvalidOperationException();
 }
