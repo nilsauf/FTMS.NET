@@ -36,6 +36,8 @@ public partial class FitnessMachineService
 		IFitnessMachineServiceConnection connection)
 	{
 		var fitnessMaschineType = ReadType();
+		EnsureType();
+
 		var dataCharacteristicId = GetDataCharacteristicId();
 		var dataCharacteristic = await connection.GetCharacteristicAsync(dataCharacteristicId);
 
@@ -46,6 +48,12 @@ public partial class FitnessMachineService
 
 		EFitnessMachineType ReadType()
 			=> (EFitnessMachineType)BitOperations.TrailingZeroCount(BitConverter.ToUInt16(connection.ServiceData.AsSpan()[3..]));
+
+		void EnsureType()
+		{
+			if (Enum.IsDefined(fitnessMaschineType) == false)
+				throw new FitnessMachineTypeNotDefinedException(fitnessMaschineType);
+		}
 
 		FitnessMachineDataReader GetDataReader() => fitnessMaschineType switch
 		{
