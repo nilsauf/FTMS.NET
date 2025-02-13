@@ -111,7 +111,27 @@ public partial class FitnessMachineService
 		var featureData = await featureCharacteristic.ReadValueAsync();
 		var featureDataSpan = featureData.AsSpan();
 
-		return new FitnessMachineFeatures(featureDataSpan[..4], featureDataSpan[5..]);
+		return new FitnessMachineFeatures(featureDataSpan[..4], featureDataSpan[5..])
+		{
+			SpeedRange = await ReadSupportedRangeAsync(FtmsUuids.SupportedSpeedRange, SupportedRange.ReadSpeed),
+			InclinationRange = await ReadSupportedRangeAsync(FtmsUuids.SupportedInclinationRange, SupportedRange.ReadInclination),
+			ResistanceLevelRange = await ReadSupportedRangeAsync(FtmsUuids.SupportedResistanceLevelRange, SupportedRange.ReadResistanceLevel),
+			PowerRange = await ReadSupportedRangeAsync(FtmsUuids.SupportedPowerRange, SupportedRange.ReadPower),
+			HeartRateRange = await ReadSupportedRangeAsync(FtmsUuids.SupportedHeartRateRange, SupportedRange.ReadHeartRate)
+		};
+
+		async Task<ISupportedRange?> ReadSupportedRangeAsync(Guid characteristicId, Func<byte[], ISupportedRange> createRange)
+		{
+			var characteristic = await connection.GetCharacteristicAsync(characteristicId);
+			if (characteristic is null)
+				return null;
+
+			var data = await characteristic.ReadValueAsync();
+			if (data is null)
+				return null;
+
+			return createRange(data);
+		}
 	}
 
 	private static void EnsureAvailabieCharacteristic(
