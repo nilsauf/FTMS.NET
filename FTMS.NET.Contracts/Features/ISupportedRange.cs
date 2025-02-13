@@ -5,4 +5,8 @@ public interface ISupportedRange
 	double MaximumValue { get; }
 	double MinimumIncrement { get; }
 	FitnessMachineUnit Unit { get; }
+
+	bool IsInRange(double value);
+
+	double Clamp(double value);
 }

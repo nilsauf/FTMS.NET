@@ -43,4 +43,10 @@ internal record SupportedRange(
 		var minimumIncrement = calculation.Calculate(readIncrement(reader));
 		return new(minimumValue, maximumValue, minimumIncrement, unit);
 	}
+
+	public bool IsInRange(double value)
+		=> value >= this.MinimumValue && value <= this.MaximumValue;
+
+	public double Clamp(double value)
+		=> Math.Clamp(value, this.MinimumValue, this.MaximumValue);
 }
