@@ -3,28 +3,27 @@
 using FTMS.NET.Utils;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 internal class IndoorBikeDataReader : FitnessMachineDataReader
 {
-	private readonly Dictionary<Guid, ValueCalculation> indoorBikeValueCalculations = new List<ValueCalculation>()
+	private readonly Dictionary<Guid, ValueCalculation> indoorBikeValueCalculations = new()
 	{
-		new(FtmsUuids.IndoorBike.InstantaneousSpeed, 1, -2, 0),
-		new(FtmsUuids.IndoorBike.AverageSpeed, 1, -2, 0),
-		new(FtmsUuids.IndoorBike.InstantaneousCadence, 1, 0, -1),
-		new(FtmsUuids.IndoorBike.AverageCadence, 1, 0, -1),
-		new(FtmsUuids.IndoorBike.TotalDistance, 1, 0, 0),
-		new(FtmsUuids.IndoorBike.ResistantLevel, 1, 1, 0),
-		new(FtmsUuids.IndoorBike.InstantaneousPower, 1, 0, 0),
-		new(FtmsUuids.IndoorBike.AveragePower, 1, 0, 0),
-		new(FtmsUuids.IndoorBike.TotalEnergy, 1, 0, 0),
-		new(FtmsUuids.IndoorBike.EnergyPerHour, 1, 0, 0),
-		new(FtmsUuids.IndoorBike.EnergyPerMinute, 1, 0, 0),
-		new(FtmsUuids.IndoorBike.HeartRate, 1, 0, 0),
-		new(FtmsUuids.IndoorBike.MetabolicEquivalent, 1, -1, 0),
-		new(FtmsUuids.IndoorBike.ElapsedTime, 1, 0, 0),
-		new(FtmsUuids.IndoorBike.RemainingTime, 1, 0, 0),
-	}.ToDictionary(calc => calc.Uuid);
+		{ FtmsUuids.IndoorBike.InstantaneousSpeed, new(1, -2, 0) },
+		{ FtmsUuids.IndoorBike.AverageSpeed, new(1, -2, 0) },
+		{ FtmsUuids.IndoorBike.InstantaneousCadence, new(1, 0, -1) },
+		{ FtmsUuids.IndoorBike.AverageCadence, new(1, 0, -1) },
+		{ FtmsUuids.IndoorBike.TotalDistance, new(1, 0, 0) },
+		{ FtmsUuids.IndoorBike.ResistantLevel, new(1, 1, 0) },
+		{ FtmsUuids.IndoorBike.InstantaneousPower, new(1, 0, 0) },
+		{ FtmsUuids.IndoorBike.AveragePower, new(1, 0, 0) },
+		{ FtmsUuids.IndoorBike.TotalEnergy, new(1, 0, 0) },
+		{ FtmsUuids.IndoorBike.EnergyPerHour, new(1, 0, 0) },
+		{ FtmsUuids.IndoorBike.EnergyPerMinute, new(1, 0, 0) },
+		{ FtmsUuids.IndoorBike.HeartRate, new(1, 0, 0) },
+		{ FtmsUuids.IndoorBike.MetabolicEquivalent, new(1, -1, 0) },
+		{ FtmsUuids.IndoorBike.ElapsedTime, new(1, 0, 0) },
+		{ FtmsUuids.IndoorBike.RemainingTime, new(1, 0, 0) },
+	};
 
 	protected override IEnumerable<IFitnessMachineValue> ReadCore(BinaryReader dataReader)
 	{
