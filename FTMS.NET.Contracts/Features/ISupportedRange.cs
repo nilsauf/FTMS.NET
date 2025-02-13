@@ -4,4 +4,5 @@ public interface ISupportedRange
 	double MinimumValue { get; }
 	double MaximumValue { get; }
 	double MinimumIncrement { get; }
+	FitnessMachineUnit Unit { get; }
 }
