@@ -37,9 +37,9 @@ public interface IFitnessMachineFeatures
 	bool SpinDownControlSupported { get; }
 	bool TargetedCadenceConfigurationSupported { get; }
 
-	ISupportedRange? Speed { get; }
-	ISupportedRange? Inclination { get; }
-	ISupportedRange? ResistanceLevel { get; }
-	ISupportedRange? Power { get; }
-	ISupportedRange? HeartRange { get; }
+	ISupportedRange? SpeedRange { get; }
+	ISupportedRange? InclinationRange { get; }
+	ISupportedRange? ResistanceLevelRange { get; }
+	ISupportedRange? PowerRange { get; }
+	ISupportedRange? HeartRateRange { get; }
 }

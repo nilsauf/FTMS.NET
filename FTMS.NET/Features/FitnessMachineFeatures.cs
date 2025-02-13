@@ -43,13 +43,13 @@ internal class FitnessMachineFeatures(
 	public bool SpinDownControlSupported { get; } = targetSettingsField.IsBitSet(15);
 	public bool TargetedCadenceConfigurationSupported { get; } = targetSettingsField.IsBitSet(16);
 
-	public ISupportedRange? Speed { get; init; }
+	public ISupportedRange? SpeedRange { get; init; }
 
-	public ISupportedRange? Inclination { get; init; }
+	public ISupportedRange? InclinationRange { get; init; }
 
-	public ISupportedRange? ResistanceLevel { get; init; }
+	public ISupportedRange? ResistanceLevelRange { get; init; }
 
-	public ISupportedRange? Power { get; init; }
+	public ISupportedRange? PowerRange { get; init; }
 
-	public ISupportedRange? HeartRange { get; init; }
+	public ISupportedRange? HeartRateRange { get; init; }
 }

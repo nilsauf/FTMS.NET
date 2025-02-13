@@ -22,7 +22,7 @@ internal record SupportedRange(
 	public static ISupportedRange ReadPower(byte[] data) =>
 		Read(data, RangeCalculations.Power, FitnessMachineUnit.Watt, r => r.ReadInt16(), r => r.ReadInt16(), r => r.ReadUInt16());
 
-	public static ISupportedRange ReadHeartRateRange(byte[] data) =>
+	public static ISupportedRange ReadHeartRate(byte[] data) =>
 		Read(data, RangeCalculations.HeartRange, FitnessMachineUnit.BeatsPerMinute, r => r.ReadByte());
 
 	private static SupportedRange Read(
