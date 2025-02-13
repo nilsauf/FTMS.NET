@@ -2,6 +2,7 @@
 
 using FTMS.NET.Control;
 using FTMS.NET.Data;
+using FTMS.NET.Features;
 using FTMS.NET.State;
 
 public interface IFitnessMachineService : IFitnessMachineControl, IFitnessMachineStateProvider, IDisposable
@@ -11,4 +12,6 @@ public interface IFitnessMachineService : IFitnessMachineControl, IFitnessMachin
 	IFitnessMachineStateProvider State { get; }
 
 	IFitnessMachineControl Control { get; }
+
+	IFitnessMachineFeatures Features { get; }
 }
