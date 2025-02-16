@@ -5,7 +5,7 @@ using FTMS.NET.Data;
 using FTMS.NET.Features;
 using FTMS.NET.State;
 
-public interface IFitnessMachineService : IFitnessMachineControl, IFitnessMachineStateProvider, IDisposable
+public interface IFitnessMachineService : IFitnessMachineControl, IFitnessMachineStateProvider, IFitnessMachineData, IDisposable
 {
 	IFitnessMachineData Data { get; }
 

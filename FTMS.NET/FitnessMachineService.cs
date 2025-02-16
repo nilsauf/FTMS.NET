@@ -1,4 +1,6 @@
 ﻿namespace FTMS.NET;
+
+using DynamicData;
 using FTMS.NET.Control;
 using FTMS.NET.Data;
 using FTMS.NET.Features;
@@ -18,16 +20,19 @@ internal sealed class FitnessMachineService(
 	public IFitnessMachineFeatures Features { get; } = features;
 
 	public Task<ControlResponse> Execute(ControlRequest request)
-	{
-		ArgumentNullException.ThrowIfNull(request);
-		return this.Control.Execute(request);
-	}
+		=> this.Control.Execute(request);
 
 	public IObservable<IFitnessMachineState> ObserveMachineState()
 		=> this.State.ObserveMachineState();
 
 	public IObservable<ITrainingState> ObserveTrainingState()
 		=> this.State.ObserveTrainingState();
+
+	public IObservable<IChangeSet<IFitnessMachineValue, Guid>> Connect()
+		=> this.Data.Connect();
+
+	public IFitnessMachineValue? GetValue(Guid uuid)
+		=> this.Data.GetValue(uuid);
 
 	public void Dispose()
 	{
