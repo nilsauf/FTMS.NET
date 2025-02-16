@@ -5,28 +5,17 @@ using FTMS.NET.Features;
 using FTMS.NET.State;
 using System.Threading.Tasks;
 
-public sealed partial class FitnessMachineService : IFitnessMachineService, IDisposable
-{
-	private readonly FitnessMachineData data;
-	private readonly FitnessMachineControl control;
-	private readonly FitnessMachineStateProvider stateProvider;
-
-	public IFitnessMachineData Data => this.data;
-	public IFitnessMachineControl Control => this.control;
-	public IFitnessMachineStateProvider State => this.stateProvider;
-	public IFitnessMachineFeatures Features { get; }
-
-	private FitnessMachineService(
-		FitnessMachineData data,
-		FitnessMachineControl control,
-		FitnessMachineStateProvider stateProvider,
+internal sealed class FitnessMachineService(
+		IFitnessMachineData data,
+		IFitnessMachineControl control,
+		IFitnessMachineStateProvider state,
 		IFitnessMachineFeatures features)
-	{
-		this.data = data;
-		this.control = control;
-		this.stateProvider = stateProvider;
-		this.Features = features;
-	}
+	: IFitnessMachineService
+{
+	public IFitnessMachineData Data { get; } = data;
+	public IFitnessMachineControl Control { get; } = control;
+	public IFitnessMachineStateProvider State { get; } = state;
+	public IFitnessMachineFeatures Features { get; } = features;
 
 	public Task<ControlResponse> Execute(ControlRequest request)
 	{
@@ -42,8 +31,8 @@ public sealed partial class FitnessMachineService : IFitnessMachineService, IDis
 
 	public void Dispose()
 	{
-		this.data.Dispose();
-		this.control.Dispose();
-		this.stateProvider.Dispose();
+		this.Data.Dispose();
+		this.Control.Dispose();
+		this.State.Dispose();
 	}
 }
