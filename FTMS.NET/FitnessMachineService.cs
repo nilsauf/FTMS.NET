@@ -8,12 +8,14 @@ using FTMS.NET.State;
 using System.Threading.Tasks;
 
 internal sealed class FitnessMachineService(
+		EFitnessMachineType type,
 		IFitnessMachineData data,
 		IFitnessMachineControl control,
 		IFitnessMachineStateProvider state,
 		IFitnessMachineFeatures features)
 	: IFitnessMachineService
 {
+	public EFitnessMachineType Type { get; } = type;
 	public IFitnessMachineData Data { get; } = data;
 	public IFitnessMachineControl Control { get; } = control;
 	public IFitnessMachineStateProvider State { get; } = state;

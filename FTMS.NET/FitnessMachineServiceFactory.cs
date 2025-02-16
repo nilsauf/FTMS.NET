@@ -12,17 +12,18 @@ using System.Numerics;
 
 public static class FitnessMachineServiceFactory
 {
-	public static async Task<IFitnessMachineService> CreateAsync(
+	public static async Task<IFitnessMachineService> CreateFitnessMachineServiceAsync(
 		this IFitnessMachineServiceConnection connection)
 	{
 		connection.EnsureAvailability();
+		var fitnessMachineType = connection.ReadType();
 
-		IFitnessMachineFeatures features = await connection.ReadFitnessMachineFeatures();
+		IFitnessMachineFeatures features = await connection.ReadFitnessMachineFeaturesAsync();
 		IFitnessMachineData data = await connection.CreateFitnessMachineDataAsync();
 		IFitnessMachineControl control = await connection.CreateFitnessMachineControlAsync();
 		IFitnessMachineStateProvider stateProvider = await connection.CreateFitnessMachineStateProviderAsync();
 
-		return new FitnessMachineService(data, control, stateProvider, features);
+		return new FitnessMachineService(fitnessMachineType, data, control, stateProvider, features);
 	}
 
 	public static void EnsureAvailability(this IFitnessMachineServiceConnection connection)
@@ -87,7 +88,7 @@ public static class FitnessMachineServiceFactory
 			trainingStateCharacteristic.ReadValueAsync);
 	}
 
-	public static async Task<IFitnessMachineFeatures> ReadFitnessMachineFeatures(
+	public static async Task<IFitnessMachineFeatures> ReadFitnessMachineFeaturesAsync(
 		this IFitnessMachineServiceConnection connection)
 	{
 		var featureCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.Feature);

@@ -7,6 +7,8 @@ using FTMS.NET.State;
 
 public interface IFitnessMachineService : IFitnessMachineControl, IFitnessMachineStateProvider, IFitnessMachineData, IDisposable
 {
+	EFitnessMachineType Type { get; }
+
 	IFitnessMachineData Data { get; }
 
 	IFitnessMachineStateProvider State { get; }
