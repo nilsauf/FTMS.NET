@@ -9,7 +9,7 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 
-internal sealed class FitnessMachineControl : IFitnessMachineControl, IDisposable
+internal sealed class FitnessMachineControl : IFitnessMachineControl
 {
 	private readonly Func<byte[], Task> writeControlPoint;
 	private readonly CancellationDisposable cancellationDisposable = new();

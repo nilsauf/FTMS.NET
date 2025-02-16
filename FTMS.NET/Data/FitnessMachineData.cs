@@ -3,7 +3,7 @@ using DynamicData;
 using System;
 using System.Reactive.Linq;
 
-internal sealed class FitnessMachineData : IFitnessMachineData, IDisposable
+internal sealed class FitnessMachineData : IFitnessMachineData
 {
 	private readonly SourceCache<IFitnessMachineValue, Guid> valueCache = new(value => value.Uuid);
 	private readonly IDisposable populateSub;

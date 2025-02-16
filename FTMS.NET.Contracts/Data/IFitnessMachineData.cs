@@ -2,7 +2,7 @@
 
 using DynamicData;
 
-public interface IFitnessMachineData
+public interface IFitnessMachineData : IDisposable
 {
 	IObservable<IChangeSet<IFitnessMachineValue, Guid>> Connect();
 
