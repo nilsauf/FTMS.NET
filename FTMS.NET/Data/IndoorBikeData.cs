@@ -3,7 +3,7 @@
 using DynamicData;
 using System;
 
-public class IndoorBikeData(IFitnessMachineData data) : IIndoorBikeData
+public sealed class IndoorBikeData(IFitnessMachineData data) : IIndoorBikeData
 {
 	public IFitnessMachineValue? InstantaneousSpeed
 		=> data.GetValue(FtmsUuids.IndoorBike.InstantaneousSpeed);
@@ -53,4 +53,6 @@ public class IndoorBikeData(IFitnessMachineData data) : IIndoorBikeData
 	public IObservable<IChangeSet<IFitnessMachineValue, Guid>> Connect() => data.Connect();
 
 	public IFitnessMachineValue? GetValue(Guid uuid) => data.GetValue(uuid);
+
+	public void Dispose() => data.Dispose();
 }
