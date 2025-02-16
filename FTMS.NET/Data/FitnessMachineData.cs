@@ -3,15 +3,15 @@ using DynamicData;
 using System;
 using System.Reactive.Linq;
 
-internal sealed class FitnessMachineData : IFitnessMachineData
+internal sealed class FitnessMachineData(
+		IObservable<byte[]> observeData,
+		FitnessMachineDataReader dataReader)
+	: IFitnessMachineData
 {
-	private readonly SourceCache<IFitnessMachineValue, Guid> valueCache = new(value => value.Uuid);
-	private readonly IDisposable populateSub;
-
-	public FitnessMachineData(IObservable<byte[]> observeData, FitnessMachineDataReader dataReader)
-	{
-		this.populateSub = this.valueCache.PopulateFrom(observeData.Select(dataReader.Read));
-	}
+	private readonly IObservableCache<IFitnessMachineValue, Guid> valueCache = observeData
+		.Select(dataReader.Read)
+		.ToObservableChangeSet(v => v.Uuid)
+		.AsObservableCache();
 
 	public IObservable<IChangeSet<IFitnessMachineValue, Guid>> Connect()
 		=> this.valueCache.Connect();
@@ -19,9 +19,5 @@ internal sealed class FitnessMachineData : IFitnessMachineData
 	public IFitnessMachineValue? GetValue(Guid uuid)
 		=> this.valueCache.KeyValues.GetValueOrDefault(uuid);
 
-	public void Dispose()
-	{
-		this.populateSub.Dispose();
-		this.valueCache.Dispose();
-	}
+	public void Dispose() => this.valueCache.Dispose();
 }
