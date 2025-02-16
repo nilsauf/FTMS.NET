@@ -15,8 +15,8 @@ internal sealed class FitnessMachineStateProvider : IFitnessMachineStateProvider
 
 	public FitnessMachineStateProvider(
 		IObservable<byte[]> observeMachineState,
-		IObservable<byte[]>? observeTrainingState,
-		Func<Task<byte[]>>? readTrainingStateAsync)
+		IObservable<byte[]> observeTrainingState,
+		Func<Task<byte[]>> readTrainingStateAsync)
 	{
 		this.machineStateObservable = observeMachineState
 			.TakeUntil(this.cancellationDisposable.Token)
@@ -24,19 +24,20 @@ internal sealed class FitnessMachineStateProvider : IFitnessMachineStateProvider
 			.Publish()
 			.RefCount();
 
-		this.trainingStateObservable = observeTrainingState?
+		this.trainingStateObservable = observeTrainingState
 			.TakeUntil(this.cancellationDisposable.Token)
 			.SelectMany(this.ReadTrainingStateDataAsync)
 			.Publish()
-			.RefCount()
-			?? Observable.Throw<ITrainingState>(new InvalidOperationException());
+			.RefCount();
 
-		this.readTrainingStateAsync = readTrainingStateAsync ?? ThrowOnExecute;
+		this.readTrainingStateAsync = readTrainingStateAsync;
 	}
 
-	public IObservable<IFitnessMachineState> ObserveMachineState() => this.machineStateObservable.AsObservable();
+	public IObservable<IFitnessMachineState> ObserveMachineState()
+		=> this.machineStateObservable.AsObservable();
 
-	public IObservable<ITrainingState> ObserveTrainingState() => this.trainingStateObservable.AsObservable();
+	public IObservable<ITrainingState> ObserveTrainingState()
+		=> this.trainingStateObservable.AsObservable();
 
 	private IFitnessMachineState ReadMachineStateData(byte[] data)
 	{
@@ -48,23 +49,24 @@ internal sealed class FitnessMachineStateProvider : IFitnessMachineStateProvider
 
 	private async Task<ITrainingState> ReadTrainingStateDataAsync(byte[] data)
 	{
-		var dataSpan = data.AsSpan();
-		var flags = dataSpan[0];
-		var trainingStateValue = (ETrainingState)dataSpan[1];
-		string? detailString = null;
-
-		if (flags.IsBitSet(0))
-			detailString = Encoding.UTF8.GetString(dataSpan[2..]);
-		else if (flags.IsBitSet(1))
-		{
-			var detailBytes = await this.readTrainingStateAsync().ConfigureAwait(false);
-			detailString = Encoding.UTF8.GetString(detailBytes);
-		}
+		var flags = data[0];
+		var trainingStateValue = (ETrainingState)data[1];
+		string? detailString = await ReadDetailString();
 
 		return new TrainingState(trainingStateValue, detailString);
+
+		async Task<string?> ReadDetailString()
+		{
+			if (flags.IsBitSet(0))
+				return Encoding.UTF8.GetString(data.AsSpan()[2..]);
+			else if (flags.IsBitSet(1))
+			{
+				var detailBytes = await this.readTrainingStateAsync();
+				return Encoding.UTF8.GetString(detailBytes.AsSpan());
+			}
+			return null;
+		}
 	}
 
 	public void Dispose() => this.cancellationDisposable.Dispose();
-
-	private static Task<byte[]> ThrowOnExecute() => throw new InvalidOperationException();
 }
