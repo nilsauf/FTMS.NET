@@ -20,11 +20,11 @@ You can find further documentation on this BLE Service in the supplied PDF files
 
 The app already needs to be connected to the BLE device. You can use a BLE library of you choice. Please create a class implementing `IFitnessMachineServiceConnection` for the used library.
 
-Use the static method `FitnessMachineService.CreateAsync(connection)` to create a new instance of `IFitnessMachineService`.
+Use the static extension methods for `IFitnessMachineServiceConnection` to create a complete `IFitnessMachineService` or just a part of it.
 
 ## Remarks
 
-### Fitness Machine Featurese
+### Fitness Machine Features
 
 Although the library reads the supported features flags and ranges from the machine into `IFitnessMachineService.Features`, the library will not use this information as not all manufacturers will set all the flags correctly.
 
