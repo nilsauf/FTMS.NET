@@ -15,7 +15,7 @@ internal sealed class FitnessMachineControl : IFitnessMachineControl
 	private readonly CancellationDisposable cancellationDisposable = new();
 	private readonly IObservable<ControlResponse> responseObservable;
 
-	public FitnessMachineControl(IObservable<byte[]> observeControlPoint, Func<byte[], Task> writeControlPoint, IScheduler? scheduler = null)
+	internal FitnessMachineControl(IObservable<byte[]> observeControlPoint, Func<byte[], Task> writeControlPoint, IScheduler? scheduler = null)
 	{
 		this.writeControlPoint = writeControlPoint;
 		this.responseObservable = observeControlPoint
@@ -27,6 +27,8 @@ internal sealed class FitnessMachineControl : IFitnessMachineControl
 
 	public async Task<ControlResponse> Execute(ControlRequest request)
 	{
+		ArgumentNullException.ThrowIfNull(request);
+
 		var responseTask = this.responseObservable
 			.FirstAsync(response => response.RequestedOpCode == request.OpCode)
 			.ToTask();
