@@ -21,4 +21,16 @@ public static class EFitnessMachineTypeExtensions
 
 		return fitnessMachineType;
 	}
+
+	public static Guid GetDataCharacteristicId(this EFitnessMachineType fitnessMachineType)
+		=> fitnessMachineType switch
+		{
+			EFitnessMachineType.Threadmill => FtmsUuids.TreadmillData,
+			EFitnessMachineType.CrossTrainer => FtmsUuids.CrossTrainerData,
+			EFitnessMachineType.StepClimber => FtmsUuids.StepClimberData,
+			EFitnessMachineType.StairClimber => FtmsUuids.StairClimberData,
+			EFitnessMachineType.Rower => FtmsUuids.RowerData,
+			EFitnessMachineType.IndoorBike => FtmsUuids.IndoorBikeData,
+			_ => throw new InvalidOperationException()
+		};
 }
