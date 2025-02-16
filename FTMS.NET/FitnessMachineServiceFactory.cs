@@ -10,52 +10,49 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 
-public partial class FitnessMachineService
+public static class FitnessMachineServiceFactory
 {
 	public static async Task<IFitnessMachineService> CreateAsync(
-		IFitnessMachineServiceConnection connection)
+		this IFitnessMachineServiceConnection connection)
 	{
-		EnsureAvailability();
+		connection.EnsureAvailability();
 
-		FitnessMachineFeatures features = await ReadFitnessMachineFeatures(connection);
-		FitnessMachineData data = await CreateFitnessMachineDataAsync(connection);
-		FitnessMachineControl control = await CreateFitnessMachineControlAsync(connection);
-		FitnessMachineStateProvider stateProvider = await CreateFitnessMachineStateProviderAsync(connection);
+		IFitnessMachineFeatures features = await connection.ReadFitnessMachineFeatures();
+		IFitnessMachineData data = await connection.CreateFitnessMachineDataAsync();
+		IFitnessMachineControl control = await connection.CreateFitnessMachineControlAsync();
+		IFitnessMachineStateProvider stateProvider = await connection.CreateFitnessMachineStateProviderAsync();
 
 		return new FitnessMachineService(data, control, stateProvider, features);
-
-		void EnsureAvailability()
-		{
-			var available = connection.ServiceData[2].IsBitSet(0);
-			if (available == false)
-				throw new FitnessMachineNotAvailableException();
-		}
 	}
 
-	private static async Task<FitnessMachineData> CreateFitnessMachineDataAsync(
-		IFitnessMachineServiceConnection connection)
+	public static void EnsureAvailability(this IFitnessMachineServiceConnection connection)
 	{
-		var fitnessMaschineType = ReadType();
-		EnsureType();
+		var available = connection.ServiceData[2].IsBitSet(0);
+		if (available == false)
+			throw new FitnessMachineNotAvailableException();
+	}
 
-		var dataCharacteristicId = GetDataCharacteristicId();
+	public static async Task<IFitnessMachineData> CreateFitnessMachineDataAsync(
+		this IFitnessMachineServiceConnection connection)
+	{
+		var fitnessMaschineType = connection.ReadType();
+		var fitnessMaschineDataReader = fitnessMaschineType.GetDataReader();
+
+		var dataCharacteristicId = fitnessMaschineType.GetDataCharacteristicId();
 		var dataCharacteristic = await connection.GetCharacteristicAsync(dataCharacteristicId);
 
-		var fitnessMaschineDataReader = GetDataReader();
-
-		EnsureAvailabieCharacteristic(dataCharacteristic, dataCharacteristicId);
+		dataCharacteristic.EnsureAvailabieCharacteristic(dataCharacteristicId);
 		return new FitnessMachineData(dataCharacteristic.ObserveValue(), fitnessMaschineDataReader);
+	}
 
-		EFitnessMachineType ReadType()
-			=> (EFitnessMachineType)BitOperations.TrailingZeroCount(BitConverter.ToUInt16(connection.ServiceData.AsSpan()[3..]));
+	public static EFitnessMachineType ReadType(this IFitnessMachineServiceConnection connection)
+		=> ((EFitnessMachineType)BitOperations.TrailingZeroCount(
+			BitConverter.ToUInt16(
+				connection.ServiceData.AsSpan()[3..])))
+			.EnsureType();
 
-		void EnsureType()
-		{
-			if (Enum.IsDefined(fitnessMaschineType) == false)
-				throw new FitnessMachineTypeNotDefinedException(fitnessMaschineType);
-		}
-
-		FitnessMachineDataReader GetDataReader() => fitnessMaschineType switch
+	private static FitnessMachineDataReader GetDataReader(this EFitnessMachineType fitnessMachineType)
+		=> fitnessMachineType switch
 		{
 			EFitnessMachineType.Threadmill => throw new NotImplementedException(),
 			EFitnessMachineType.CrossTrainer => throw new NotImplementedException(),
@@ -66,7 +63,8 @@ public partial class FitnessMachineService
 			_ => throw new InvalidOperationException()
 		};
 
-		Guid GetDataCharacteristicId() => fitnessMaschineType switch
+	public static Guid GetDataCharacteristicId(this EFitnessMachineType fitnessMachineType)
+		=> fitnessMachineType switch
 		{
 			EFitnessMachineType.Threadmill => FtmsUuids.TreadmillData,
 			EFitnessMachineType.CrossTrainer => FtmsUuids.CrossTrainerData,
@@ -76,25 +74,24 @@ public partial class FitnessMachineService
 			EFitnessMachineType.IndoorBike => FtmsUuids.IndoorBikeData,
 			_ => throw new InvalidOperationException()
 		};
-	}
 
-	private static async Task<FitnessMachineControl> CreateFitnessMachineControlAsync(
-		IFitnessMachineServiceConnection connection)
+	public static async Task<IFitnessMachineControl> CreateFitnessMachineControlAsync(
+		this IFitnessMachineServiceConnection connection)
 	{
 		var controlPointCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.ControlPoint);
-		EnsureAvailabieCharacteristic(controlPointCharacteristic, FtmsUuids.ControlPoint);
+		controlPointCharacteristic.EnsureAvailabieCharacteristic(FtmsUuids.ControlPoint);
 		return new FitnessMachineControl(
 			controlPointCharacteristic.ObserveValue(),
 			controlPointCharacteristic.WriteValueAsync);
 	}
 
-	private static async Task<FitnessMachineStateProvider> CreateFitnessMachineStateProviderAsync(
-		IFitnessMachineServiceConnection connection)
+	public static async Task<IFitnessMachineStateProvider> CreateFitnessMachineStateProviderAsync(
+		this IFitnessMachineServiceConnection connection)
 	{
 		var machineStateCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.MachineState);
 		var trainingStateCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.TrainingState);
 
-		EnsureAvailabieCharacteristic(machineStateCharacteristic, FtmsUuids.MachineState);
+		machineStateCharacteristic.EnsureAvailabieCharacteristic(FtmsUuids.MachineState);
 		trainingStateCharacteristic ??= new ThrowingCharacteristic(FtmsUuids.TrainingState);
 		return new FitnessMachineStateProvider(
 			machineStateCharacteristic.ObserveValue(),
@@ -102,11 +99,11 @@ public partial class FitnessMachineService
 			trainingStateCharacteristic.ReadValueAsync);
 	}
 
-	private static async Task<FitnessMachineFeatures> ReadFitnessMachineFeatures(
-		IFitnessMachineServiceConnection connection)
+	public static async Task<IFitnessMachineFeatures> ReadFitnessMachineFeatures(
+		this IFitnessMachineServiceConnection connection)
 	{
 		var featureCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.Feature);
-		EnsureAvailabieCharacteristic(featureCharacteristic, FtmsUuids.Feature);
+		featureCharacteristic.EnsureAvailabieCharacteristic(FtmsUuids.Feature);
 
 		var featureData = await featureCharacteristic.ReadValueAsync();
 		var featureDataSpan = featureData.AsSpan();
@@ -134,8 +131,8 @@ public partial class FitnessMachineService
 		}
 	}
 
-	private static void EnsureAvailabieCharacteristic(
-		[NotNull] IFitnessMachineCharacteristic? characteristic,
+	public static void EnsureAvailabieCharacteristic(
+		[NotNull] this IFitnessMachineCharacteristic? characteristic,
 		Guid characteristicUuid)
 	{
 		if (characteristic is null)
