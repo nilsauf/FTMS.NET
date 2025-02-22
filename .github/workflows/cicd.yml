@@ -54,20 +54,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    #- name: Checkout
-    #  uses: actions/checkout@v4
-    #  with:
-    #    fetch-depth: 0
-    #
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
     #- name: Changelog
     #  uses: glennawatson/ChangeLog@v1
     #  id: changelog
-
-    #- uses: actions-ecosystem/action-regex-match@v2
-    #  id: version-match
-    #  with:
-    #    text: ${{ github.ref }}
-    #    regex: '^refs/tags/[vV]?(\\d+\\.\\d+\\.\\d+)'
     
     - name: Download NuGet Packages
       uses: actions/download-artifact@v4
@@ -76,19 +70,11 @@ jobs:
 
     - name: Upload Files
       env:
-        RELEASE_TAG: ${{ github.event.release.id }}
-        NUGET_FILES: '**/*.nupkg'
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: gh release upload "$RELEASE_TAG" "$NUGET_FILES"
-
-    #- name: Create Release
-    #  uses: softprops/action-gh-release@v2
-    #  with:
-    #    tag_name: ${{ steps.version-match.ouputs.group1 }}
-    #    body: |
-    #      ${{ steps.changelog.outputs.commitLog }}
-    #    files: |
-    #      ${{ '**/*.nupkg' }}
+        RELEASE_TAG: ${{ github.event.release.tag_name }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        NUGET_FILES=$(find . -name '*.nupkg')
+        gh release upload "$RELEASE_TAG" $NUGET_FILES
      
   publish:
     if: ${{ startsWith(github.ref, 'refs/heads/release') || github.ref == 'refs/heads/main' || github.event.release }}
