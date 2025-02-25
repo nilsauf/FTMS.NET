@@ -1,8 +1,10 @@
 ﻿namespace FTMS.NET;
+
+using SourceGeneration.Reflection;
 using System;
 using System.Collections.Frozen;
-using System.Reflection;
 
+[SourceReflection]
 public static class FtmsUuids
 {
 	private static readonly FrozenDictionary<Guid, string> allFieldsByUuid;
@@ -26,6 +28,7 @@ public static class FtmsUuids
 	public readonly static Guid RowerData = Guid.ParseExact("00002ad1-0000-1000-8000-00805f9b34fb", "d");
 	public readonly static Guid IndoorBikeData = Guid.ParseExact("00002ad2-0000-1000-8000-00805f9b34fb", "d");
 
+	[SourceReflection]
 	public static class IndoorBike
 	{
 		public static readonly Guid InstantaneousSpeed = new("765050cd-a033-4972-a71b-29c013c0845b");
@@ -49,12 +52,11 @@ public static class FtmsUuids
 	{
 		var thisType = typeof(FtmsUuids);
 		var guidType = typeof(Guid);
-		allFieldsByUuid = thisType.GetNestedTypes()
-			.Prepend(thisType)
-			.SelectMany(type => type
-				.GetFields(BindingFlags.Static | BindingFlags.Public)
-				.Where(f => f.FieldType == guidType))
-			.ToFrozenDictionary(f => (Guid)f.GetValue(null)!, f => f.Name);
+		allFieldsByUuid = SourceReflector.GetTypes()
+			.SelectMany(t => t.GetFieldsAndProperties()
+				.Where(fop => fop.IsStatic && fop.Accessibility == SourceAccessibility.Public)
+				.Where(fop => fop.MemberType == guidType))
+			.ToFrozenDictionary(fop => (Guid)fop.GetValue(null)!, fop => fop.Name);
 	}
 
 	public static string GetName(Guid uuid)
