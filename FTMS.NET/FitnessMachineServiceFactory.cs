@@ -29,7 +29,7 @@ public static class FitnessMachineServiceFactory
 	public static void EnsureAvailability(this IFitnessMachineServiceConnection connection)
 	{
 		var available = connection.ServiceData[2].IsBitSet(0);
-		if (available == false)
+		if (available is false)
 			throw new FitnessMachineNotAvailableException();
 	}
 
@@ -68,7 +68,8 @@ public static class FitnessMachineServiceFactory
 		this IFitnessMachineServiceConnection connection)
 	{
 		var controlPointCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.ControlPoint);
-		controlPointCharacteristic.EnsureAvailabieCharacteristic(FtmsUuids.ControlPoint);
+		controlPointCharacteristic ??= new ThrowingCharacteristic(FtmsUuids.ControlPoint);
+
 		return new FitnessMachineControl(
 			controlPointCharacteristic.ObserveValue(),
 			controlPointCharacteristic.WriteValueAsync);
@@ -80,8 +81,9 @@ public static class FitnessMachineServiceFactory
 		var machineStateCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.MachineState);
 		var trainingStateCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.TrainingState);
 
-		machineStateCharacteristic.EnsureAvailabieCharacteristic(FtmsUuids.MachineState);
+		machineStateCharacteristic ??= new ThrowingCharacteristic(FtmsUuids.MachineState);
 		trainingStateCharacteristic ??= new ThrowingCharacteristic(FtmsUuids.TrainingState);
+
 		return new FitnessMachineStateProvider(
 			machineStateCharacteristic.ObserveValue(),
 			trainingStateCharacteristic.ObserveValue(),
