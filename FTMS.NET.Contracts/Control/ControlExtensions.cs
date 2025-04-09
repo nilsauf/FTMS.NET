@@ -1,10 +1,9 @@
 ﻿namespace FTMS.NET.Control;
 
+using FTMS.NET.Utils;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-
-using FTMS.NET.Utils;
 
 public static class ControlExtensions
 {
@@ -75,7 +74,7 @@ public static class ControlExtensions
 	public static Task SetWheelCircumference(this IFitnessMachineControl fitnessMachineControl, ushort wheelCircumference)
 		=> fitnessMachineControl.ExecuteWithValue(EControlOpCode.SetWheelCircumference, wheelCircumference);
 
-	public static async Task<(ushort targetSpeedLow, ushort targetSpeedHigh)> StartSpindDownControl(this IFitnessMachineControl fitnessMachineControl)
+	public static async Task<(ushort targetSpeedLow, ushort targetSpeedHigh)> StartSpinDownControl(this IFitnessMachineControl fitnessMachineControl)
 	{
 		var response = await fitnessMachineControl.SendSpinDownControl(0x01);
 		using MemoryStream responseStream = new(response.ResponseParameter);
