@@ -34,6 +34,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{A37B17AA-A
 		docs\GATT_Specification_Supplement.pdf = docs\GATT_Specification_Supplement.pdf
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTMS.NET.Tests", "FTMS.NET.Tests\FTMS.NET.Tests.csproj", "{6E28F066-E6BD-4B83-94F2-81E65ACDF4E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{6407016E-950F-4AFB-8706-C09F76595C21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6407016E-950F-4AFB-8706-C09F76595C21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6407016E-950F-4AFB-8706-C09F76595C21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E28F066-E6BD-4B83-94F2-81E65ACDF4E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E28F066-E6BD-4B83-94F2-81E65ACDF4E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E28F066-E6BD-4B83-94F2-81E65ACDF4E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E28F066-E6BD-4B83-94F2-81E65ACDF4E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,5 +62,8 @@ Global
 		{6F624991-F164-4486-A138-64019DAF414F} = {B233E0EF-55C6-48CC-83C1-F72962EF8EEF}
 		{895B4BF3-6DFB-4680-9963-819130322685} = {6F624991-F164-4486-A138-64019DAF414F}
 		{A37B17AA-A497-4F41-8C05-9315650D06B1} = {B233E0EF-55C6-48CC-83C1-F72962EF8EEF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F78A6215-632C-4FC2-A62D-2FDF4FEA5FD9}
 	EndGlobalSection
 EndGlobal
