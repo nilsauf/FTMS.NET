@@ -1,5 +1,7 @@
 ﻿namespace FTMS.NET.Utils;
+
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
@@ -19,4 +21,22 @@ internal static class UtilExtensions
 				cancellationToken.Register(observer.OnCompleted),
 				sub);
 		});
+
+	[return: DynamicallyAccessedMembers(SourceReflectorAccessMemerTypes.All)]
+	internal static Type EnsureBaseTypeOf<TBaseType>(
+		[DynamicallyAccessedMembers(SourceReflectorAccessMemerTypes.All)]
+		this Type type)
+	{
+		Type? baseType = type.BaseType;
+		Type targetType = typeof(TBaseType);
+
+		while (baseType != null && baseType != typeof(object))
+		{
+			if (baseType == targetType)
+				return type;
+			baseType = baseType.BaseType;
+		}
+
+		throw new InvalidOperationException($"Type '{type.FullName}' does not inherit from '{targetType.FullName}'.");
+	}
 }

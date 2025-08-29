@@ -53,16 +53,16 @@ public static class FitnessMachineServiceFactory
 			.EnsureType();
 
 	private static FitnessMachineDataReader GetDataReader(this EFitnessMachineType fitnessMachineType)
-		=> fitnessMachineType switch
+		=> new(fitnessMachineType switch
 		{
 			EFitnessMachineType.Threadmill => throw new NotImplementedException(),
 			EFitnessMachineType.CrossTrainer => throw new NotImplementedException(),
 			EFitnessMachineType.StepClimber => throw new NotImplementedException(),
 			EFitnessMachineType.StairClimber => throw new NotImplementedException(),
 			EFitnessMachineType.Rower => throw new NotImplementedException(),
-			EFitnessMachineType.IndoorBike => new IndoorBikeDataReader(),
+			EFitnessMachineType.IndoorBike => typeof(IndoorBikeSingleFrameReader),
 			_ => throw new InvalidOperationException()
-		};
+		});
 
 	public static async Task<IFitnessMachineControl> CreateFitnessMachineControlAsync(
 		this IFitnessMachineServiceConnection connection)
