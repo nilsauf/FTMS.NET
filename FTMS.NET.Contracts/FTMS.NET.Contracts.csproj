@@ -6,7 +6,6 @@
 
   <ItemGroup>
   	<PackageReference Include="DynamicData" Version="9.4.1" />
-  	<PackageReference Include="SourceGeneration.Reflection" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

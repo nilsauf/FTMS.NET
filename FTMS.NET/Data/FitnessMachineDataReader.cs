@@ -1,24 +1,14 @@
 ﻿namespace FTMS.NET.Data;
-using FTMS.NET;
 using System.Collections.Generic;
 
-internal abstract class FitnessMachineDataReader
+internal sealed class FitnessMachineDataReader(SingleFrameStrategy singleFrameStrategy)
 {
-	public IEnumerable<IFitnessMachineValue> Read(byte[] data)
+	public IEnumerable<IFitnessMachineValue> Read(byte[] dataFrame)
 	{
-		if (data.Length == 0)
+		if (dataFrame.Length == 0)
 			return [];
 
-		using MemoryStream dataStream = new(data);
-		using BinaryReader dataReader = new(dataStream);
-
-		var list = this.ReadCore(dataReader).ToList();
-
-		return list;
+		using var singleFrameReader = new SingleFrameReader(dataFrame, singleFrameStrategy);
+		return singleFrameReader.ReadFrame();
 	}
-
-	protected IFitnessMachineValue CreateNewValue(Guid uuid, double value)
-		=> new FitnessMachineValue(uuid, value, FtmsUuids.GetName(uuid));
-
-	protected abstract IEnumerable<IFitnessMachineValue> ReadCore(BinaryReader dataReader);
 }
