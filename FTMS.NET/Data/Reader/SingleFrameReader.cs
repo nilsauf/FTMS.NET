@@ -6,7 +6,7 @@ using System;
 internal abstract class SingleFrameReader : IDisposable
 {
 	private readonly MemoryStream dataStream;
-	private readonly byte[] flagField;
+	private readonly byte[] flagFields;
 
 	protected BinaryReader DataReader { get; }
 	protected abstract Dictionary<Guid, ValueCalculation> ValueCalculations { get; }
@@ -15,7 +15,7 @@ internal abstract class SingleFrameReader : IDisposable
 	{
 		this.dataStream = new(dataFrame);
 		this.DataReader = new(this.dataStream);
-		this.flagField = this.DataReader.ReadBytes(flagFieldLength);
+		this.flagFields = this.DataReader.ReadBytes(flagFieldLength);
 	}
 
 	public IEnumerable<IFitnessMachineValue> ReadFrame()
@@ -56,10 +56,10 @@ internal abstract class SingleFrameReader : IDisposable
 	}
 
 	protected IFitnessMachineValue? IfBitIsSet(Guid uuid, int bitPosition, Func<Guid, IFitnessMachineValue?> read)
-		=> this.flagField.IsBitSet(bitPosition) is true ? read(uuid) : null;
+		=> this.flagFields.IsBitSet(bitPosition) is true ? read(uuid) : null;
 
 	protected IFitnessMachineValue? IfBitIsNotSet(Guid uuid, int bitPosition, Func<Guid, IFitnessMachineValue?> read)
-		=> this.flagField.IsBitSet(bitPosition) is false ? read(uuid) : null;
+		=> this.flagFields.IsBitSet(bitPosition) is false ? read(uuid) : null;
 
 	protected static IFitnessMachineValue CreateNewValue(Guid uuid, double value)
 		=> new FitnessMachineValue(uuid, value, FtmsUuids.GetName(uuid));
