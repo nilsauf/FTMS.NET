@@ -11,7 +11,7 @@ internal abstract class SingleFrameReader : IDisposable
 	protected BinaryReader DataReader { get; }
 	protected abstract Dictionary<Guid, ValueCalculation> ValueCalculations { get; }
 
-	public SingleFrameReader(byte[] dataFrame, int flagFieldLength = 2)
+	protected SingleFrameReader(byte[] dataFrame, int flagFieldLength = 2)
 	{
 		this.dataStream = new(dataFrame);
 		this.DataReader = new(this.dataStream);
