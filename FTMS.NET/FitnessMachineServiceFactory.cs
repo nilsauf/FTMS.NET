@@ -1,7 +1,6 @@
 ﻿namespace FTMS.NET;
 using FTMS.NET.Control;
 using FTMS.NET.Data;
-using FTMS.NET.Data.Reader;
 using FTMS.NET.Exceptions;
 using FTMS.NET.Features;
 using FTMS.NET.State;
@@ -53,16 +52,7 @@ public static class FitnessMachineServiceFactory
 			.EnsureType();
 
 	private static FitnessMachineDataReader GetDataReader(this EFitnessMachineType fitnessMachineType)
-		=> new(fitnessMachineType switch
-		{
-			EFitnessMachineType.Threadmill => throw new NotImplementedException(),
-			EFitnessMachineType.CrossTrainer => throw new NotImplementedException(),
-			EFitnessMachineType.StepClimber => throw new NotImplementedException(),
-			EFitnessMachineType.StairClimber => throw new NotImplementedException(),
-			EFitnessMachineType.Rower => throw new NotImplementedException(),
-			EFitnessMachineType.IndoorBike => typeof(IndoorBikeSingleFrameReader),
-			_ => throw new InvalidOperationException()
-		});
+		=> new(SingleFrameStrategies.GetFor(fitnessMachineType));
 
 	public static async Task<IFitnessMachineControl> CreateFitnessMachineControlAsync(
 		this IFitnessMachineServiceConnection connection)
