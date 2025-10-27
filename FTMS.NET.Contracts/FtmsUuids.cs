@@ -51,6 +51,9 @@ public static class FtmsUuids
 	public static readonly Guid AveragePace = new("4ced1b35-7d75-4911-9afd-9a8ba9ca9d4e");
 	public static readonly Guid ForceOnBelt = new("9fa8ab4b-8382-4240-9f71-2a04c221aa7f");
 	public static readonly Guid PowerOutput = new("7128776e-0991-44b9-8511-ef969a8ea418");
+	public static readonly Guid StepsPerMinute = new("814c417b-95f2-4cea-b86f-30625b4c2777");
+	public static readonly Guid AverageStepRate = new("654ecaf1-be99-4256-a764-ff8f556d4392");
+	public static readonly Guid StrideCount = new("ecdfab6f-40f4-45ad-9be9-030982a563ff");
 
 	static FtmsUuids()
 	{

@@ -8,7 +8,7 @@ internal static class SingleFrameStrategies
 	private readonly static Dictionary<EFitnessMachineType, Lazy<SingleFrameStrategy>> strategies = new()
 	{
 		{ EFitnessMachineType.Threadmill, new(CreateThreadmillStrategy) },
-		{ EFitnessMachineType.CrossTrainer, new(() => throw new NotImplementedException()) },
+		{ EFitnessMachineType.CrossTrainer, new(CreateCrossTrainerStrategy) },
 		{ EFitnessMachineType.StepClimber, new(() => throw new NotImplementedException()) },
 		{ EFitnessMachineType.StairClimber, new(() => throw new NotImplementedException()) },
 		{ EFitnessMachineType.Rower, new(() => throw new NotImplementedException()) },
@@ -42,6 +42,34 @@ internal static class SingleFrameStrategies
 			new(FtmsUuids.RemainingTime, true, 11, typeof(ushort), new(1, 0, 0)),
 			new(FtmsUuids.ForceOnBelt, true, 12, typeof(short), new(1, 0, 0)),
 			new(FtmsUuids.PowerOutput, true, 12, typeof(short), new(1, 0, 0)),
+		]
+	};
+
+	private static SingleFrameStrategy CreateCrossTrainerStrategy() => new()
+	{
+		FlagFieldLength = 3,
+		SingleValueRules =
+		[
+			new(FtmsUuids.InstantaneousSpeed, false, 0, typeof(ushort), new(1, -2, 0)),
+			new(FtmsUuids.AverageSpeed, true, 1, typeof(ushort), new(1, -2, 0)),
+			new(FtmsUuids.TotalDistance, true, 2, typeof(UInt24), new(1, 0, 0)),
+			new(FtmsUuids.StepsPerMinute, true, 3, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.AverageStepRate, true, 3, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.StrideCount, true, 4, typeof(ushort), new(1, -1, 0)),
+			new(FtmsUuids.PositiveElevationGain, true, 5, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.NegativeElevationGain, true, 5, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.Inclination, true, 6, typeof(short), new(1, -1, 0)),
+			new(FtmsUuids.RampAngleSetting, true, 6, typeof(short), new(1, -1, 0)),
+			new(FtmsUuids.ResistantLevel, true, 7, typeof(byte), new(1, 1, 0)),
+			new(FtmsUuids.InstantaneousPower, true, 8, typeof(short), new(1, 0, 0)),
+			new(FtmsUuids.AveragePower, true, 9, typeof(short), new(1, 0, 0)),
+			new(FtmsUuids.TotalEnergy, true, 10, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.EnergyPerHour, true, 10, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.EnergyPerMinute, true, 10, typeof(byte), new(1, 0, 0)),
+			new(FtmsUuids.HeartRate, true, 11, typeof(byte), new(1, 0, 0)),
+			new(FtmsUuids.MetabolicEquivalent, true, 12, typeof(byte), new(1, -1, 0)),
+			new(FtmsUuids.ElapsedTime, true, 13, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.RemainingTime, true, 14, typeof(ushort), new(1, 0, 0)),
 		]
 	};
 
