@@ -69,7 +69,7 @@ public static class FtmsUuids
 			.Where(fop => fop.IsStatic && fop.Accessibility == SourceAccessibility.Public)
 			.Where(fop => fop.MemberType == guidType)
 			.ToFrozenDictionary(fop => (Guid)fop.GetValue(null)!, fop => fop.Name)
-			?? throw new InvalidOperationException($"{nameof(FtmsUuids)} calss reflection was not generated!");
+			?? throw new InvalidOperationException($"{nameof(FtmsUuids)} class reflection was not generated!");
 	}
 
 	public static string GetName(Guid uuid)

@@ -9,7 +9,7 @@ internal static class SingleFrameStrategies
 	{
 		{ EFitnessMachineType.Threadmill, new(CreateThreadmillStrategy) },
 		{ EFitnessMachineType.CrossTrainer, new(CreateCrossTrainerStrategy) },
-		{ EFitnessMachineType.StepClimber, new(CreatStepClimberStrategy) },
+		{ EFitnessMachineType.StepClimber, new(CreateStepClimberStrategy) },
 		{ EFitnessMachineType.StairClimber, new(CreateStairClimberStrategy) },
 		{ EFitnessMachineType.Rower, new(CreateRowerStrategy) },
 		{ EFitnessMachineType.IndoorBike, new(CreateIndoorBikeStrategy) }
@@ -73,7 +73,7 @@ internal static class SingleFrameStrategies
 		]
 	};
 
-	private static SingleFrameStrategy CreatStepClimberStrategy() => new()
+	private static SingleFrameStrategy CreateStepClimberStrategy() => new()
 	{
 		FlagFieldLength = 2,
 		SingleValueRules =
