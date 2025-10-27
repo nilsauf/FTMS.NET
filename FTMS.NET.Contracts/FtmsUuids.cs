@@ -54,6 +54,8 @@ public static class FtmsUuids
 	public static readonly Guid StepsPerMinute = new("814c417b-95f2-4cea-b86f-30625b4c2777");
 	public static readonly Guid AverageStepRate = new("654ecaf1-be99-4256-a764-ff8f556d4392");
 	public static readonly Guid StrideCount = new("ecdfab6f-40f4-45ad-9be9-030982a563ff");
+	public static readonly Guid Floors = new("ace47522-5ea0-459b-afe7-8b70020f9e15");
+	public static readonly Guid StepCount = new("97984a03-ee3f-4fd0-857f-d17500ac9038");
 
 	static FtmsUuids()
 	{
