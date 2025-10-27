@@ -6,49 +6,49 @@ using System;
 public sealed class IndoorBikeData(IFitnessMachineData data) : IIndoorBikeData
 {
 	public IFitnessMachineValue? InstantaneousSpeed
-		=> data.GetValue(FtmsUuids.IndoorBike.InstantaneousSpeed);
+		=> data.GetValue(FtmsUuids.InstantaneousSpeed);
 
 	public IFitnessMachineValue? AverageSpeed
-		=> data.GetValue(FtmsUuids.IndoorBike.AverageSpeed);
+		=> data.GetValue(FtmsUuids.AverageSpeed);
 
 	public IFitnessMachineValue? InstantaneousCadence
-		=> data.GetValue(FtmsUuids.IndoorBike.InstantaneousCadence);
+		=> data.GetValue(FtmsUuids.InstantaneousCadence);
 
 	public IFitnessMachineValue? AverageCadence
-		=> data.GetValue(FtmsUuids.IndoorBike.AverageCadence);
+		=> data.GetValue(FtmsUuids.AverageCadence);
 
 	public IFitnessMachineValue? TotalDistance
-		=> data.GetValue(FtmsUuids.IndoorBike.TotalDistance);
+		=> data.GetValue(FtmsUuids.TotalDistance);
 
 	public IFitnessMachineValue? ResistantLevel
-		=> data.GetValue(FtmsUuids.IndoorBike.ResistantLevel);
+		=> data.GetValue(FtmsUuids.ResistantLevel);
 
 	public IFitnessMachineValue? InstantaneousPower
-		=> data.GetValue(FtmsUuids.IndoorBike.InstantaneousPower);
+		=> data.GetValue(FtmsUuids.InstantaneousPower);
 
 	public IFitnessMachineValue? AveragePower
-		=> data.GetValue(FtmsUuids.IndoorBike.AveragePower);
+		=> data.GetValue(FtmsUuids.AveragePower);
 
 	public IFitnessMachineValue? TotalEnergy
-		=> data.GetValue(FtmsUuids.IndoorBike.TotalEnergy);
+		=> data.GetValue(FtmsUuids.TotalEnergy);
 
 	public IFitnessMachineValue? EnergyPerHour
-		=> data.GetValue(FtmsUuids.IndoorBike.EnergyPerHour);
+		=> data.GetValue(FtmsUuids.EnergyPerHour);
 
 	public IFitnessMachineValue? EnergyPerMinute
-		=> data.GetValue(FtmsUuids.IndoorBike.EnergyPerMinute);
+		=> data.GetValue(FtmsUuids.EnergyPerMinute);
 
 	public IFitnessMachineValue? HeartRate
-		=> data.GetValue(FtmsUuids.IndoorBike.HeartRate);
+		=> data.GetValue(FtmsUuids.HeartRate);
 
 	public IFitnessMachineValue? MetabolicEquivalent
-		=> data.GetValue(FtmsUuids.IndoorBike.MetabolicEquivalent);
+		=> data.GetValue(FtmsUuids.MetabolicEquivalent);
 
 	public IFitnessMachineValue? ElapsedTime
-		=> data.GetValue(FtmsUuids.IndoorBike.ElapsedTime);
+		=> data.GetValue(FtmsUuids.ElapsedTime);
 
 	public IFitnessMachineValue? RemainingTime
-		=> data.GetValue(FtmsUuids.IndoorBike.RemainingTime);
+		=> data.GetValue(FtmsUuids.RemainingTime);
 
 	public IObservable<IChangeSet<IFitnessMachineValue, Guid>> Connect() => data.Connect();
 

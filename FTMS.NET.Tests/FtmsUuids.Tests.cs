@@ -23,17 +23,17 @@ public class FtmsUuids_Tests
 		{ FtmsUuids.IndoorBikeData, nameof(FtmsUuids.IndoorBikeData) },
 
         // Indoor Bike specific
-        { FtmsUuids.IndoorBike.InstantaneousSpeed, nameof(FtmsUuids.IndoorBike.InstantaneousSpeed) },
-		{ FtmsUuids.IndoorBike.AverageSpeed, nameof(FtmsUuids.IndoorBike.AverageSpeed) },
-		{ FtmsUuids.IndoorBike.InstantaneousCadence, nameof(FtmsUuids.IndoorBike.InstantaneousCadence) },
-		{ FtmsUuids.IndoorBike.AverageCadence, nameof(FtmsUuids.IndoorBike.AverageCadence) },
-		{ FtmsUuids.IndoorBike.TotalDistance, nameof(FtmsUuids.IndoorBike.TotalDistance) },
-		{ FtmsUuids.IndoorBike.ResistantLevel, nameof(FtmsUuids.IndoorBike.ResistantLevel) },
-		{ FtmsUuids.IndoorBike.InstantaneousPower, nameof(FtmsUuids.IndoorBike.InstantaneousPower) },
-		{ FtmsUuids.IndoorBike.AveragePower, nameof(FtmsUuids.IndoorBike.AveragePower) },
-		{ FtmsUuids.IndoorBike.TotalEnergy, nameof(FtmsUuids.IndoorBike.TotalEnergy) },
-		{ FtmsUuids.IndoorBike.EnergyPerHour, nameof(FtmsUuids.IndoorBike.EnergyPerHour) },
-		{ FtmsUuids.IndoorBike.EnergyPerMinute, nameof(FtmsUuids.IndoorBike.EnergyPerMinute) },
+        { FtmsUuids.InstantaneousSpeed, nameof(FtmsUuids.InstantaneousSpeed) },
+		{ FtmsUuids.AverageSpeed, nameof(FtmsUuids.AverageSpeed) },
+		{ FtmsUuids.InstantaneousCadence, nameof(FtmsUuids.InstantaneousCadence) },
+		{ FtmsUuids.AverageCadence, nameof(FtmsUuids.AverageCadence) },
+		{ FtmsUuids.TotalDistance, nameof(FtmsUuids.TotalDistance) },
+		{ FtmsUuids.ResistantLevel, nameof(FtmsUuids.ResistantLevel) },
+		{ FtmsUuids.InstantaneousPower, nameof(FtmsUuids.InstantaneousPower) },
+		{ FtmsUuids.AveragePower, nameof(FtmsUuids.AveragePower) },
+		{ FtmsUuids.TotalEnergy, nameof(FtmsUuids.TotalEnergy) },
+		{ FtmsUuids.EnergyPerHour, nameof(FtmsUuids.EnergyPerHour) },
+		{ FtmsUuids.EnergyPerMinute, nameof(FtmsUuids.EnergyPerMinute) },
 	};
 
 	[Theory]
