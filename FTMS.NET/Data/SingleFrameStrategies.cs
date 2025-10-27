@@ -1,5 +1,6 @@
 ﻿namespace FTMS.NET.Data;
 
+using FTMS.NET.Utils;
 using System;
 
 internal static class SingleFrameStrategies
@@ -27,7 +28,7 @@ internal static class SingleFrameStrategies
 			new(FtmsUuids.AverageSpeed, true, 1, typeof(ushort), new(1, -2, 0)),
 			new(FtmsUuids.InstantaneousCadence, true, 2, typeof(ushort), new(1, 0, -1)),
 			new(FtmsUuids.AverageCadence, true, 3, typeof(ushort), new(1, 0, -1)),
-			new(FtmsUuids.TotalDistance, true, 4, typeof(uint), new(1, 0, 0)),
+			new(FtmsUuids.TotalDistance, true, 4, typeof(UInt24), new(1, 0, 0)),
 			new(FtmsUuids.ResistantLevel, true, 5, typeof(byte), new(1, 1, 0)),
 			new(FtmsUuids.InstantaneousPower, true, 6, typeof(short), new(1, 0, 0)),
 			new(FtmsUuids.AveragePower, true, 7, typeof(short), new(1, 0, 0)),
