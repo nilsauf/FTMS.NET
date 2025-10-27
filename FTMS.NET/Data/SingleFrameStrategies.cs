@@ -10,7 +10,7 @@ internal static class SingleFrameStrategies
 		{ EFitnessMachineType.Threadmill, new(CreateThreadmillStrategy) },
 		{ EFitnessMachineType.CrossTrainer, new(CreateCrossTrainerStrategy) },
 		{ EFitnessMachineType.StepClimber, new(CreatStepClimberStrategy) },
-		{ EFitnessMachineType.StairClimber, new(() => throw new NotImplementedException()) },
+		{ EFitnessMachineType.StairClimber, new(CreateStairClimberStrategy) },
 		{ EFitnessMachineType.Rower, new(() => throw new NotImplementedException()) },
 		{ EFitnessMachineType.IndoorBike, new(CreateIndoorBikeStrategy) }
 	};
@@ -90,6 +90,26 @@ internal static class SingleFrameStrategies
 			new(FtmsUuids.MetabolicEquivalent, true, 6, typeof(byte), new(1, -1, 0)),
 			new(FtmsUuids.ElapsedTime, true, 7, typeof(ushort), new(1, 0, 0)),
 			new(FtmsUuids.RemainingTime, true, 8, typeof(ushort), new(1, 0, 0))
+		]
+	};
+
+	private static SingleFrameStrategy CreateStairClimberStrategy() => new()
+	{
+		FlagFieldLength = 2,
+		SingleValueRules =
+		[
+			new(FtmsUuids.Floors, false, 0, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.StepsPerMinute, true, 1, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.AverageStepRate, true, 2, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.PositiveElevationGain, true, 3, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.StrideCount, true, 4, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.TotalEnergy, true, 5, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.EnergyPerHour, true, 5, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.EnergyPerMinute, true, 5, typeof(byte), new(1, 0, 0)),
+			new(FtmsUuids.HeartRate, true, 6, typeof(byte), new(1, 0, 0)),
+			new(FtmsUuids.MetabolicEquivalent, true, 7, typeof(byte), new(1, -1, 0)),
+			new(FtmsUuids.ElapsedTime, true, 8, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.RemainingTime, true, 9, typeof(ushort), new(1, 0, 0))
 		]
 	};
 
