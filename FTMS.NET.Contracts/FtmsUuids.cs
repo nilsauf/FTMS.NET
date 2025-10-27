@@ -43,6 +43,14 @@ public static class FtmsUuids
 	public static readonly Guid MetabolicEquivalent = new("166f2f4c-9cff-4050-985b-2fea8b1a95bc");
 	public static readonly Guid ElapsedTime = new("1eb082c4-e3ae-46f9-b4cb-d55a2f81e27b");
 	public static readonly Guid RemainingTime = new("02185a25-968e-40e0-a55c-b2acf71e50fb");
+	public static readonly Guid Inclination = new("d31143f6-3808-4921-aa24-abc3e714e291");
+	public static readonly Guid RampAngleSetting = new("fa0e1933-d7a3-4537-a496-0a7211da6ca0");
+	public static readonly Guid PositiveElevationGain = new("ef8234ce-19bd-4596-860e-30e3e632dcc6");
+	public static readonly Guid NegativeElevationGain = new("bcb222de-896f-4582-8308-c44fa2c05a0c");
+	public static readonly Guid InstantaneousPace = new("cb813306-52ef-463b-bde6-be92e58706ab");
+	public static readonly Guid AveragePace = new("4ced1b35-7d75-4911-9afd-9a8ba9ca9d4e");
+	public static readonly Guid ForceOnBelt = new("9fa8ab4b-8382-4240-9f71-2a04c221aa7f");
+	public static readonly Guid PowerOutput = new("7128776e-0991-44b9-8511-ef969a8ea418");
 
 	static FtmsUuids()
 	{
