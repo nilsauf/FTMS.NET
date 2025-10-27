@@ -46,8 +46,17 @@ internal sealed class SingleFrameReader : IDisposable
 			//Type t when t == typeof(ulong)  => (long)this.dataReader.ReadUInt64(),
 			//Type t when t == typeof(float)  => (long)this.dataReader.ReadSingle(),
 			//Type t when t == typeof(double) => (long)this.dataReader.ReadDouble(),
+			Type t when t == typeof(UInt24) => this.ReadUInt24(),
 			_ => throw new NotSupportedException($"Unsupported RawValueType: {rawValueType.FullName}")
 		};
+	}
+
+	private UInt24 ReadUInt24()
+	{
+		byte b0 = this.dataReader.ReadByte();
+		byte b1 = this.dataReader.ReadByte();
+		byte b2 = this.dataReader.ReadByte();
+		return new UInt24(b0, b1, b2);
 	}
 
 	public void Dispose()
