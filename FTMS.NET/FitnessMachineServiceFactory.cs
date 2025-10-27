@@ -35,14 +35,14 @@ public static class FitnessMachineServiceFactory
 	public static async Task<IFitnessMachineData> CreateFitnessMachineDataAsync(
 		this IFitnessMachineServiceConnection connection)
 	{
-		var fitnessMaschineType = connection.ReadType();
-		var fitnessMaschineDataReader = fitnessMaschineType.GetDataReader();
+		var fitnessMachineType = connection.ReadType();
+		var fitnessMachineDataReader = fitnessMachineType.GetDataReader();
 
-		var dataCharacteristicId = fitnessMaschineType.GetDataCharacteristicId();
+		var dataCharacteristicId = fitnessMachineType.GetDataCharacteristicId();
 		var dataCharacteristic = await connection.GetCharacteristicAsync(dataCharacteristicId);
 
 		dataCharacteristic.EnsureAvailabieCharacteristic(dataCharacteristicId);
-		return new FitnessMachineData(dataCharacteristic.ObserveValue(), fitnessMaschineDataReader);
+		return new FitnessMachineData(dataCharacteristic.ObserveValue(), fitnessMachineDataReader);
 	}
 
 	public static EFitnessMachineType ReadType(this IFitnessMachineServiceConnection connection)
