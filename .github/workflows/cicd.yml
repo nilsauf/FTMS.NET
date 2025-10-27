@@ -64,7 +64,7 @@ jobs:
     #  id: changelog
     
     - name: Download NuGet Packages
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: nuget
 
@@ -83,7 +83,7 @@ jobs:
     
     steps:
     - name: Download NuGet Packages
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: nuget  
     
