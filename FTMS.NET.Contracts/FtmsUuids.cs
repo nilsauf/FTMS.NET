@@ -56,6 +56,9 @@ public static class FtmsUuids
 	public static readonly Guid StrideCount = new("ecdfab6f-40f4-45ad-9be9-030982a563ff");
 	public static readonly Guid Floors = new("ace47522-5ea0-459b-afe7-8b70020f9e15");
 	public static readonly Guid StepCount = new("97984a03-ee3f-4fd0-857f-d17500ac9038");
+	public static readonly Guid StrokeRate = new("c663b25a-abef-44fe-a852-2b7ccbdb0149");
+	public static readonly Guid StrokeCount = new("0119eab6-298b-4c2f-a7c4-26a4933c8365");
+	public static readonly Guid AverageStrokeRate = new("07d4df62-397b-4040-ac9a-8fef6ad8a44d");
 
 	static FtmsUuids()
 	{

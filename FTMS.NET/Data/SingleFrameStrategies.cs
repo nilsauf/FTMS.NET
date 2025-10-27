@@ -11,7 +11,7 @@ internal static class SingleFrameStrategies
 		{ EFitnessMachineType.CrossTrainer, new(CreateCrossTrainerStrategy) },
 		{ EFitnessMachineType.StepClimber, new(CreatStepClimberStrategy) },
 		{ EFitnessMachineType.StairClimber, new(CreateStairClimberStrategy) },
-		{ EFitnessMachineType.Rower, new(() => throw new NotImplementedException()) },
+		{ EFitnessMachineType.Rower, new(CreateRowerStrategy) },
 		{ EFitnessMachineType.IndoorBike, new(CreateIndoorBikeStrategy) }
 	};
 
@@ -110,6 +110,30 @@ internal static class SingleFrameStrategies
 			new(FtmsUuids.MetabolicEquivalent, true, 7, typeof(byte), new(1, -1, 0)),
 			new(FtmsUuids.ElapsedTime, true, 8, typeof(ushort), new(1, 0, 0)),
 			new(FtmsUuids.RemainingTime, true, 9, typeof(ushort), new(1, 0, 0))
+		]
+	};
+
+	private static SingleFrameStrategy CreateRowerStrategy() => new()
+	{
+		FlagFieldLength = 2,
+		SingleValueRules =
+		[
+			new(FtmsUuids.StrokeRate, false, 0, typeof(byte), new(1, 0, -1)),
+			new(FtmsUuids.StrokeCount, false, 0, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.AverageStrokeRate, true, 1, typeof(byte), new(1, 0, -1)),
+			new(FtmsUuids.TotalDistance, true, 2, typeof(UInt24), new(1, 0, 0)),
+			new(FtmsUuids.InstantaneousPace, true, 3, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.AveragePace, true, 4, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.InstantaneousPower, true, 5, typeof(short), new(1, 0, 0)),
+			new(FtmsUuids.AveragePower, true, 6, typeof(short), new(1, 0, 0)),
+			new(FtmsUuids.ResistantLevel, true, 7, typeof(byte), new(1, 1, 0)),
+			new(FtmsUuids.TotalEnergy, true, 8, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.EnergyPerHour, true, 8, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.EnergyPerMinute, true, 8, typeof(byte), new(1, 0, 0)),
+			new(FtmsUuids.HeartRate, true, 9, typeof(byte), new(1, 0, 0)),
+			new(FtmsUuids.MetabolicEquivalent, true, 10, typeof(byte), new(1, -1, 0)),
+			new(FtmsUuids.ElapsedTime, true, 11, typeof(ushort), new(1, 0, 0)),
+			new(FtmsUuids.RemainingTime, true, 12, typeof(ushort), new(1, 0, 0))
 		]
 	};
 
