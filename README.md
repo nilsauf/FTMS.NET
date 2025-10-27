@@ -1,20 +1,11 @@
 # FTMS.NET
 
-This Repository holds a Fitness Machine Service (FTMS) Client Library for .NET.
+This repository holds a Fitness Machine Service (FTMS) Client Library for .NET.
 FTMS is a service protocol for Bluetooth Low Energy Devices.
 
-**Supported Fitness Maschine Types**
-
-- Threadmill   :no_entry:
-- CrossTrainer :no_entry:
-- StepClimber  :no_entry:
-- StairClimber :no_entry:
-- Rower        :no_entry:
-- IndoorBike   :heavy_check_mark:
-
-**Contributions to support other maschines types are welcome!**
-
 You can find further documentation on this BLE Service in the supplied PDF files (see docs folder).
+
+:warning: **All Fitness Machine Types are supported, but not all are tested! (see below)** :warning:
 
 ## Creation
 
@@ -26,11 +17,11 @@ Use the static extension methods for `IFitnessMachineServiceConnection` to creat
 
 ### Fitness Machine Features
 
-Although the library reads the supported features flags and ranges from the machine into `IFitnessMachineService.Features`, the library will not use this information as not all manufacturers will set all the flags correctly.
+Although the library is able to read the supported features flags and ranges from the machine into `IFitnessMachineService.Features`, the library will not use this information as not all manufacturers will set all the flags correctly.
 
 Eg the control request to change the target power will not check if the new target power is in the supported power range of the machine.
 
-## Tested Maschines
+## Tested Machines
 
 In theory every device, which supports FTMS, should work.
 
