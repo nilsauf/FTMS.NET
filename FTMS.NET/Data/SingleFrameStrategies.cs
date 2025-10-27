@@ -1,20 +1,24 @@
 ﻿namespace FTMS.NET.Data;
+
 using System;
 
 internal static class SingleFrameStrategies
 {
-	public static SingleFrameStrategy GetFor(EFitnessMachineType type) => type switch
+	private readonly static Dictionary<EFitnessMachineType, Lazy<SingleFrameStrategy>> strategies = new()
 	{
-		EFitnessMachineType.Threadmill => throw new NotImplementedException(),
-		EFitnessMachineType.CrossTrainer => throw new NotImplementedException(),
-		EFitnessMachineType.StepClimber => throw new NotImplementedException(),
-		EFitnessMachineType.StairClimber => throw new NotImplementedException(),
-		EFitnessMachineType.Rower => throw new NotImplementedException(),
-		EFitnessMachineType.IndoorBike => IndoorBike,
-		_ => throw new InvalidOperationException()
+		{ EFitnessMachineType.Threadmill, new(() => throw new NotImplementedException()) },
+		{ EFitnessMachineType.CrossTrainer, new(() => throw new NotImplementedException()) },
+		{ EFitnessMachineType.StepClimber, new(() => throw new NotImplementedException()) },
+		{ EFitnessMachineType.StairClimber, new(() => throw new NotImplementedException()) },
+		{ EFitnessMachineType.Rower, new(() => throw new NotImplementedException()) },
+		{ EFitnessMachineType.IndoorBike, new(CreateIndoorBikeStrategy) }
 	};
 
-	public static SingleFrameStrategy IndoorBike { get; } = new()
+	public static SingleFrameStrategy GetFor(EFitnessMachineType type)
+		=> strategies.GetValueOrDefault(type)?.Value
+			?? throw new NotSupportedException($"No SingleFrameStrategy defined for Fitness Machine Type: {type}");
+
+	private static SingleFrameStrategy CreateIndoorBikeStrategy() => new()
 	{
 		FlagFieldLength = 2,
 		SingleValueRules =
