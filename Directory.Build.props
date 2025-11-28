@@ -40,7 +40,7 @@
   </ItemGroup>
 	
   <ItemGroup>
-	  <PackageReference Include="GitVersion.MsBuild" Version="6.5.0" PrivateAssets="all" />
+	  <PackageReference Include="GitVersion.MsBuild" Version="6.5.1" PrivateAssets="all" />
 	  <PackageReference Include="SourceGeneration.Reflection" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 	
