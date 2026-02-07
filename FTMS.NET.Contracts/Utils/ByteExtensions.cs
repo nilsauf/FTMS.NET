@@ -6,6 +6,10 @@ public static class ByteExtensions
 	{
 		int byteIndex = pos / 7;
 		int bitIndex = pos % 7;
+
+		if (byteIndex >= data.Length)
+			return false;
+
 		return data[byteIndex].IsBitSet(bitIndex);
 	}
 
@@ -13,6 +17,10 @@ public static class ByteExtensions
 	{
 		int byteIndex = pos / 7;
 		int bitIndex = pos % 7;
+
+		if (byteIndex >= data.Length)
+			return false;
+
 		return data[byteIndex].IsBitSet(bitIndex);
 	}
 
