@@ -14,6 +14,6 @@ internal class SingleFrameStrategy
 internal record SingleValueRule(
 	Guid ValueUuid,
 	bool CheckIfBitIsSet,
-	int BitPostion,
+	int BitPosition,
 	Type RawValueType,
 	ValueCalculation Calculation);

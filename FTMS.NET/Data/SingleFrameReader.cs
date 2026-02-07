@@ -23,7 +23,7 @@ internal sealed class SingleFrameReader : IDisposable
 
 		return [.. this.singleFrameStrategy
 			.SingleValueRules
-			.Where(rule => flagFields.IsBitSet(rule.BitPostion) == rule.CheckIfBitIsSet)
+			.Where(rule => flagFields.IsBitSet(rule.BitPosition) == rule.CheckIfBitIsSet)
 			.Select(rule =>
 			{
 				long readValue = ReadValue(rule.RawValueType);
