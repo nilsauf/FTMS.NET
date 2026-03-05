@@ -31,7 +31,10 @@ internal static class ByteExtensions
 	}
 
 	public static bool IsBitSet(this byte b, int pos)
-		=> pos < 0 || pos > 7 ? 
-			throw new IndexOutOfRangeException() : 
-			(b & 1 << pos) != 0;
+	{
+		if ((uint)pos > 7)
+			throw new IndexOutOfRangeException();
+
+		return ((b >> pos) & 1) != 0;
+	}
 }
