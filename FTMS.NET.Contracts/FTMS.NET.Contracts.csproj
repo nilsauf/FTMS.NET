@@ -8,4 +8,8 @@
   	<PackageReference Include="DynamicData" Version="9.4.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="FTMS.NET.Tests" />
+  </ItemGroup>
+
 </Project>
