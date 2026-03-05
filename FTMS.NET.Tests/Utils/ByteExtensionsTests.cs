@@ -48,8 +48,8 @@ public class ByteExtensionsTests
         // Act
         bool result = b.IsBitSet(pos);
 
-        // Assert
-        Assert.False(result);
+		// Assert
+		Assert.False(result);
     }
 
     /// <summary>
@@ -73,8 +73,8 @@ public class ByteExtensionsTests
         // Act
         bool result = b.IsBitSet(pos);
 
-        // Assert
-        Assert.True(result);
+		// Assert
+		Assert.True(result);
     }
 
     /// <summary>
@@ -98,8 +98,8 @@ public class ByteExtensionsTests
         // Act
         bool result = b.IsBitSet(pos);
 
-        // Assert
-        Assert.True(result);
+		// Assert
+		Assert.True(result);
     }
 
     /// <summary>
@@ -119,8 +119,8 @@ public class ByteExtensionsTests
         // Act
         bool result = b.IsBitSet(pos);
 
-        // Assert
-        Assert.False(result);
+		// Assert
+		Assert.False(result);
     }
 
     /// <summary>
@@ -137,12 +137,7 @@ public class ByteExtensionsTests
         byte b = 0xFF;
 
         // Act & Assert
-        // Negative shift amounts produce implementation-defined behavior.
-        // In C#, the shift count is masked, so this will not throw but may produce unexpected results.
-        bool result = b.IsBitSet(pos);
-
-        // We're just documenting that it doesn't throw - the actual result is not defined
-        Assert.True(result || !result); // Will always pass, documents no exception thrown
+        Assert.Throws<IndexOutOfRangeException>(() => b.IsBitSet(pos));
     }
 
     /// <summary>
@@ -161,13 +156,7 @@ public class ByteExtensionsTests
         byte b = 0b1010_0101;
 
         // Act & Assert
-        // Position > 7 is beyond byte boundary. The shift behavior will wrap.
-        // For pos=8, (1 << 8) = 256 = 0x100, which when ANDed with a byte will be 0.
-        // We're documenting the behavior rather than asserting specific values.
-        bool result = b.IsBitSet(pos);
-
-        // Just verify no exception is thrown
-        Assert.True(result || !result); // Will always pass, documents no exception thrown
+        Assert.Throws<IndexOutOfRangeException>(() => b.IsBitSet(pos));
     }
 
     /// <summary>
@@ -182,11 +171,7 @@ public class ByteExtensionsTests
         int pos = int.MaxValue;
 
         // Act
-        bool result = b.IsBitSet(pos);
-
-        // Assert
-        // Shift count is masked, so behavior is defined but may be unexpected
-        Assert.True(result || !result); // Will always pass, documents no exception thrown
+        Assert.Throws<IndexOutOfRangeException>(() => b.IsBitSet(pos));
     }
 
     /// <summary>
@@ -201,11 +186,7 @@ public class ByteExtensionsTests
         int pos = int.MinValue;
 
         // Act
-        bool result = b.IsBitSet(pos);
-
-        // Assert
-        // Shift count is masked, so behavior is defined but may be unexpected
-        Assert.True(result || !result); // Will always pass, documents no exception thrown
+        Assert.Throws<IndexOutOfRangeException>(() => b.IsBitSet(pos));
     }
 
     /// <summary>
@@ -220,10 +201,7 @@ public class ByteExtensionsTests
     public void IsBitSet_BoundaryByteValues_ReturnsExpectedResult(byte b, int pos, bool expected)
     {
         // Act
-        bool result = b.IsBitSet(pos);
-
-        // Assert
-        Assert.Equal(expected, result);
+        Assert.Equal(expected, b.IsBitSet(pos));
     }
 
     /// <summary>
@@ -239,10 +217,7 @@ public class ByteExtensionsTests
         int pos = 0;
 
         // Act
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        Assert.False(result);
+        AssertThrowsIndexOutOfRange(data, pos);
     }
 
     /// <summary>
@@ -259,10 +234,7 @@ public class ByteExtensionsTests
         int pos = 100;
 
         // Act
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        Assert.False(result);
+        AssertThrowsIndexOutOfRange(data, pos);
     }
 
     /// <summary>
@@ -279,10 +251,7 @@ public class ByteExtensionsTests
         int pos = 7; // byteIndex = 1, equals data.Length
 
         // Act
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        Assert.False(result);
+        AssertThrowsIndexOutOfRange(data, pos);
     }
 
     /// <summary>
@@ -299,10 +268,7 @@ public class ByteExtensionsTests
         int pos = int.MaxValue;
 
         // Act
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        Assert.False(result);
+        AssertThrowsIndexOutOfRange(data, pos);
     }
 
     /// <summary>
@@ -320,12 +286,7 @@ public class ByteExtensionsTests
         int pos = -1;
 
         // Act
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        // -1 / 7 = 0 (byteIndex), -1 % 7 = -1 (bitIndex)
-        // This calls backing[0].IsBitSet(-1), which checks bit -1 (likely wraps or returns false)
-        Assert.False(result);
+        AssertThrowsIndexOutOfRange(data, pos);
     }
 
     /// <summary>
@@ -342,10 +303,7 @@ public class ByteExtensionsTests
         int pos = int.MinValue;
 
         // Act
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        Assert.False(result);
+        AssertThrowsIndexOutOfRange(data, pos);
     }
 
     /// <summary>
@@ -366,13 +324,8 @@ public class ByteExtensionsTests
         // Arrange
         byte[] backing = [0b0100_0000]; // Only bit 6 is set
         ReadOnlySpan<byte> data = new(backing);
-
-        // Act
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        Assert.Equal(expected, result);
-    }
+		Assert.Equal(expected, data.IsBitSet(pos));
+	}
 
     /// <summary>
     /// Tests that IsBitSet correctly uses 7-bit packing to map positions across multiple bytes.
@@ -422,13 +375,8 @@ public class ByteExtensionsTests
         // Second byte: 0b0101_0101 (bits 0, 2, 4, 6 set)
         byte[] backing = [0b0000_0000, 0b0101_0101];
         ReadOnlySpan<byte> data = new(backing);
-
-        // Act
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        Assert.Equal(expected, result);
-    }
+		Assert.Equal(expected, data.IsBitSet(pos));
+	}
 
     /// <summary>
     /// Tests that IsBitSet works correctly with all bits set in multiple bytes.
@@ -447,13 +395,8 @@ public class ByteExtensionsTests
         // Arrange
         byte[] backing = [0xFF, 0xFF];
         ReadOnlySpan<byte> data = new(backing);
-
-        // Act
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        Assert.Equal(expected, result);
-    }
+		Assert.Equal(expected, data.IsBitSet(pos));
+	}
 
     /// <summary>
     /// Tests that IsBitSet works correctly with no bits set.
@@ -472,13 +415,8 @@ public class ByteExtensionsTests
         // Arrange
         byte[] backing = [0x00, 0x00, 0x00];
         ReadOnlySpan<byte> data = new(backing);
-
-        // Act
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        Assert.False(result);
-    }
+		Assert.False(data.IsBitSet(pos));
+	}
 
     /// <summary>
     /// Tests that IsBitSet returns false when position maps to third byte but only two bytes exist.
@@ -494,10 +432,7 @@ public class ByteExtensionsTests
         int pos = 14; // byteIndex = 14/7 = 2, but only indices 0-1 exist
 
         // Act
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        Assert.False(result);
+        AssertThrowsIndexOutOfRange(data, pos);
     }
 
     /// <summary>
@@ -518,8 +453,6 @@ public class ByteExtensionsTests
 
         // Act
         bool result = data.IsBitSet(pos);
-
-        // Assert
         Assert.Equal(expected, result);
     }
 
@@ -538,12 +471,9 @@ public class ByteExtensionsTests
         // Arrange
         byte[] data = new byte[arrayLength];
 
-        // Act
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        Assert.False(result);
-    }
+		// Act
+		Assert.Throws<IndexOutOfRangeException>(() => data.IsBitSet(pos));
+	}
 
     /// <summary>
     /// Tests that IsBitSet throws NullReferenceException when the array is null.
@@ -571,12 +501,9 @@ public class ByteExtensionsTests
         // Arrange
         byte[] data = [];
 
-        // Act
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        Assert.False(result);
-    }
+		// Act
+		Assert.Throws<IndexOutOfRangeException>(() => data.IsBitSet(pos));
+	}
 
     /// <summary>
     /// Tests IsBitSet with various positions and bit patterns using 7-bit packing.
@@ -595,12 +522,9 @@ public class ByteExtensionsTests
     [InlineData(14, new byte[] { 0b0000_0000, 0b0000_0000, 0b0000_0001 }, true)] // pos=14: byte[2] bit 0 is set
     public void IsBitSet_ValidPositionWithBitPattern_ReturnsExpectedResult(int pos, byte[] data, bool expectedResult)
     {
-        // Act
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        Assert.Equal(expectedResult, result);
-    }
+		// Act
+		Assert.Equal(expectedResult, data.IsBitSet(pos));
+	}
 
     /// <summary>
     /// Tests IsBitSet at byte boundary positions (where position transitions from one byte to the next).
@@ -614,19 +538,10 @@ public class ByteExtensionsTests
         byte[] data = [0b0100_0000, 0b0000_0001, 0b0100_0000];
 
         // Act & Assert
-        // pos=6 maps to byte[0] bit 6
         Assert.True(data.IsBitSet(6));
-
-        // pos=7 maps to byte[1] bit 0
         Assert.True(data.IsBitSet(7));
-
-        // pos=13 maps to byte[1] bit 6
         Assert.False(data.IsBitSet(13));
-
-        // pos=14 maps to byte[2] bit 0
         Assert.False(data.IsBitSet(14));
-
-        // pos=20 maps to byte[2] bit 6
         Assert.True(data.IsBitSet(20));
     }
 
@@ -635,10 +550,10 @@ public class ByteExtensionsTests
     /// which should throw IndexOutOfRangeException when accessing the array.
     /// </summary>
     [Theory]
-    [InlineData(-7)]   // byteIndex = -1, bitIndex = 0
-    [InlineData(-8)]   // byteIndex = -2, bitIndex = -1
-    [InlineData(-14)]  // byteIndex = -2, bitIndex = 0
-    [InlineData(int.MinValue)] // Very large negative value
+    [InlineData(-7)]
+    [InlineData(-8)]
+    [InlineData(-14)]
+    [InlineData(int.MinValue)]
     public void IsBitSet_NegativePositionWithNegativeByteIndex_ThrowsIndexOutOfRangeException(int pos)
     {
         // Arrange
@@ -654,24 +569,16 @@ public class ByteExtensionsTests
     /// This tests the actual behavior of the bit shift operation with negative indices.
     /// </summary>
     [Theory]
-    [InlineData(-1)]  // byteIndex = 0, bitIndex = -1
-    [InlineData(-2)]  // byteIndex = 0, bitIndex = -2
-    [InlineData(-6)]  // byteIndex = 0, bitIndex = -6
+    [InlineData(-1)]
+    [InlineData(-2)]
+    [InlineData(-6)]
     public void IsBitSet_NegativePositionWithZeroByteIndex_CallsByteIsBitSetWithNegativeBitIndex(int pos)
     {
         // Arrange
         byte[] data = [0xFF];
 
         // Act
-        // The behavior of left shift with negative value is undefined/implementation-specific
-        // In C#, left shift by negative amount wraps around (shifts right by the complement)
-        // This test documents the actual behavior
-        bool result = data.IsBitSet(pos);
-
-        // Assert
-        // We're testing that it doesn't throw and returns some boolean value
-        // The specific result depends on the bit shift implementation
-        Assert.IsType<bool>(result);
+        Assert.Throws<IndexOutOfRangeException>(() => data.IsBitSet(pos));
     }
 
     /// <summary>
@@ -753,7 +660,21 @@ public class ByteExtensionsTests
         byte[] data = [0x00, 0x00, 0b0100_0000];
 
         // Act & Assert
-        Assert.True(data.IsBitSet(20));   // Exactly at boundary, bit is set
-        Assert.False(data.IsBitSet(21));  // Beyond boundary, returns false
+        Assert.True(data.IsBitSet(20));			// Exactly at boundary, bit is set
+		AssertThrowsIndexOutOfRange(data, 21);  // Beyond boundary, throws
     }
+
+	// Helper for ReadOnlySpan<byte> exception assertion
+	private static void AssertThrowsIndexOutOfRange(ReadOnlySpan<byte> span, int pos)
+	{
+		try
+		{
+			span.IsBitSet(pos);
+			Assert.Fail("Expected IndexOutOfRangeException was not thrown.");
+		}
+		catch (IndexOutOfRangeException)
+		{
+			// Expected
+		}
+	}
 }
