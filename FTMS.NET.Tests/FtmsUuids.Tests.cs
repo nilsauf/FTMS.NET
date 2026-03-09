@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET.Tests;
+
 using System;
 
 public class FtmsUuids_Tests
@@ -42,5 +43,20 @@ public class FtmsUuids_Tests
 	{
 		var name = FtmsUuids.GetName(uuid);
 		Assert.Equal(nameOfUuid, name);
+	}
+
+	[Fact]
+	public void FtmsUuids_GetName_WithUnknownUuid_ReturnsEmptyString()
+	{
+		var unknownUuid = Guid.NewGuid();
+		var name = FtmsUuids.GetName(unknownUuid);
+		Assert.Equal(string.Empty, name);
+	}
+
+	[Fact]
+	public void FtmsUuids_GetName_WithEmptyGuid_ReturnsEmptyString()
+	{
+		var name = FtmsUuids.GetName(Guid.Empty);
+		Assert.Equal(string.Empty, name);
 	}
 }
