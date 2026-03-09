@@ -1,5 +1,5 @@
 ﻿namespace FTMS.NET.State;
-public enum EStateOpCode
+public enum EStateOpCode : byte
 {
 	Reset = 0x01,
 	FitnessMachineStoppedOrPausedByTheUser = 0x02,

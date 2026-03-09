@@ -1,5 +1,5 @@
 ﻿namespace FTMS.NET.Control;
-public enum EControlOpCode
+public enum EControlOpCode : byte
 {
 	RequestControl = 0x00,
 	Reset = 0x01,

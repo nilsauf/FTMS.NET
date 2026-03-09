@@ -1,5 +1,5 @@
 ﻿namespace FTMS.NET.State;
-public enum ESpinDownState
+public enum ESpinDownState : byte
 {
 	SpinDownRequested = 0x01,
 	Success = 0x02,
