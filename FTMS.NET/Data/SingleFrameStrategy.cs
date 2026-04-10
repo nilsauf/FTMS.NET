@@ -4,7 +4,7 @@ using FTMS.NET.Utils;
 using System;
 using System.Collections.Immutable;
 
-internal class SingleFrameStrategy
+internal sealed class SingleFrameStrategy
 {
 	public required int FlagFieldLength { get; init; }
 
@@ -26,7 +26,7 @@ internal enum RawValueType
     Double
 }
 
-internal record SingleValueRule(
+internal sealed record SingleValueRule(
     Guid ValueUuid,
     bool CheckIfBitIsSet,
     int BitPosition,
