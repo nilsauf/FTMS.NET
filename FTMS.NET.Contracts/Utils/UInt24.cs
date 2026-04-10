@@ -1,7 +1,7 @@
 ﻿namespace FTMS.NET.Utils;
+
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-
 
 /// Based on https://stackoverflow.com/a/12549260
 [StructLayout(LayoutKind.Sequential)]

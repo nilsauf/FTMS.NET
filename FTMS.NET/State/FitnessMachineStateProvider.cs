@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET.State;
+
 using FTMS.NET.Utils;
 using System;
 using System.Linq;

@@ -8,6 +8,7 @@ public static class ISupportedRangeExtensions
 	public static bool IsInRange<TValue>(this ISupportedRange range, TValue value)
 		where TValue : struct, INumber<TValue>
 		=> GenericMath.IsInRange(value, range.MinimumValue, range.MaximumValue);
+
 	public static TValue Clamp<TValue>(this ISupportedRange range, TValue value)
 		where TValue : struct, INumber<TValue>
 		=> GenericMath.Clamp(value, range.MinimumValue, range.MaximumValue);

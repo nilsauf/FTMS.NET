@@ -1,4 +1,6 @@
 ﻿namespace FTMS.NET.State;
-public record FitnessMachineStateParameter(string Name, FitnessMachineUnit Unit, double Value)
-{
-}
+
+public sealed record FitnessMachineStateParameter(
+	string Name,
+	FitnessMachineUnit Unit,
+	double Value);

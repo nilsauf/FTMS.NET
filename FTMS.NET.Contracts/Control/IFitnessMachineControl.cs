@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET.Control;
+
 using System.Threading.Tasks;
 
 public interface IFitnessMachineControl : IDisposable

@@ -2,11 +2,13 @@
 
 using System.Collections.Immutable;
 
-internal record FitnessMachineState(EStateOpCode OpCode, byte[] RawData) : IFitnessMachineState
+internal sealed record FitnessMachineState(
+		EStateOpCode OpCode, 
+		byte[] RawData) 
+	: IFitnessMachineState
 {
-	private readonly Lazy<IImmutableList<object>> parameters = new(
-		() => FitnessMachineStateParameterFactory.ReadParameters(OpCode, RawData).ToImmutableList());
+	private IImmutableList<object>? parameters;
 
 	public IImmutableList<object> ReadParameters()
-		=> this.parameters.Value;
+		=> this.parameters ??= FitnessMachineStateParameterFactory.ReadParameters(OpCode, RawData).ToImmutableList();
 }

@@ -3,9 +3,10 @@
 using FTMS.NET.Utils;
 using System;
 
-internal class FitnessMachineFeatures(
-	ReadOnlySpan<byte> featuresField,
-	ReadOnlySpan<byte> targetSettingsField) : IFitnessMachineFeatures
+internal sealed class FitnessMachineFeatures(
+		ReadOnlySpan<byte> featuresField,
+		ReadOnlySpan<byte> targetSettingsField) 
+	: IFitnessMachineFeatures
 {
 	public bool AverageSpeedSupported { get; } = featuresField.IsBitSet(0);
 	public bool CadenceSupported { get; } = featuresField.IsBitSet(1);

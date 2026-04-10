@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET.Utils;
+
 using System.Numerics;
 
 internal static class GenericMath

@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET.Data;
+
 using System;
 
 public interface IFitnessMachineValue

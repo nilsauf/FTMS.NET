@@ -5,7 +5,7 @@ using FTMS.NET.Utils;
 /// <summary>
 /// Unit tests for the <see cref="GenericMath"/> class.
 /// </summary>
-public class GenericMathTests
+public sealed class GenericMathTests
 {
     /// <summary>
     /// Tests that Clamp returns the minimum value when the input value is below the minimum.

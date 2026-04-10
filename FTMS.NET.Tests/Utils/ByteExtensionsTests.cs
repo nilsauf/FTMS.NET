@@ -2,7 +2,7 @@
 
 using FTMS.NET.Utils;
 
-public class ByteExtensionsTests
+public sealed class ByteExtensionsTests
 {
     /// <summary>
     /// Tests that IsBitSet correctly identifies set and unset bits for all positions 0-7

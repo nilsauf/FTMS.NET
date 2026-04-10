@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET;
+
 using FTMS.NET.Control;
 using FTMS.NET.Data;
 using FTMS.NET.Exceptions;

@@ -1,10 +1,11 @@
-﻿
-namespace FTMS.NET.Utils.UnitTests;
+﻿namespace FTMS.NET.Tests.Utils;
+
+using FTMS.NET.Utils;
 
 /// <summary>
 /// Unit tests for the <see cref="ValueCalculation"/> record's Calculate method.
 /// </summary>
-public partial class ValueCalculationTests
+public sealed partial class ValueCalculationTests
 {
     /// <summary>
     /// Tests that Calculate returns the correct result with default parameters (multiplier=1, exponents=0).

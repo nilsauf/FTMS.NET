@@ -1,6 +1,6 @@
 ﻿namespace FTMS.NET.Control;
+
 using FTMS.NET.Exceptions;
-using FTMS.NET.Utils;
 using System;
 using System.Linq;
 using System.Reactive.Concurrency;
@@ -15,7 +15,10 @@ internal sealed class FitnessMachineControl : IFitnessMachineControl
 	private readonly CancellationDisposable cancellationDisposable = new();
 	private readonly IObservable<ControlResponse> responseObservable;
 
-	internal FitnessMachineControl(IObservable<byte[]> observeControlPoint, Func<byte[], Task> writeControlPoint, IScheduler? scheduler = null)
+	internal FitnessMachineControl(
+		IObservable<byte[]> observeControlPoint,
+		Func<byte[], Task> writeControlPoint,
+		IScheduler? scheduler = null)
 	{
 		this.writeControlPoint = writeControlPoint;
 		this.responseObservable = observeControlPoint

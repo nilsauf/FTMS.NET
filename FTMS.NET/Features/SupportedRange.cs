@@ -3,11 +3,11 @@
 using FTMS.NET;
 using FTMS.NET.Utils;
 
-internal record SupportedRange(
-	double MinimumValue,
-	double MaximumValue,
-	double MinimumIncrement,
-	FitnessMachineUnit Unit)
+internal sealed record SupportedRange(
+		double MinimumValue,
+		double MaximumValue,
+		double MinimumIncrement,
+		FitnessMachineUnit Unit)
 	: ISupportedRange
 {
 	public static ISupportedRange ReadSpeed(byte[] data) =>

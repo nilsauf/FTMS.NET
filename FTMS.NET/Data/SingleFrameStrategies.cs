@@ -1,23 +1,19 @@
 ﻿namespace FTMS.NET.Data;
 
-using FTMS.NET.Utils;
 using System;
 
 internal static class SingleFrameStrategies
 {
-	private readonly static Dictionary<EFitnessMachineType, Lazy<SingleFrameStrategy>> strategies = new()
+	public static SingleFrameStrategy GetFor(EFitnessMachineType type) => type switch
 	{
-		{ EFitnessMachineType.Threadmill, new(CreateThreadmillStrategy) },
-		{ EFitnessMachineType.CrossTrainer, new(CreateCrossTrainerStrategy) },
-		{ EFitnessMachineType.StepClimber, new(CreateStepClimberStrategy) },
-		{ EFitnessMachineType.StairClimber, new(CreateStairClimberStrategy) },
-		{ EFitnessMachineType.Rower, new(CreateRowerStrategy) },
-		{ EFitnessMachineType.IndoorBike, new(CreateIndoorBikeStrategy) }
+		EFitnessMachineType.Threadmill => CreateThreadmillStrategy(),
+		EFitnessMachineType.CrossTrainer => CreateCrossTrainerStrategy(),
+		EFitnessMachineType.StepClimber => CreateStepClimberStrategy(),
+		EFitnessMachineType.StairClimber => CreateStairClimberStrategy(),
+		EFitnessMachineType.Rower => CreateRowerStrategy(),
+		EFitnessMachineType.IndoorBike => CreateIndoorBikeStrategy(),
+		_ => throw new ArgumentException($"Unsupported fitness machine type: {type}")
 	};
-
-	public static SingleFrameStrategy GetFor(EFitnessMachineType type)
-		=> strategies.GetValueOrDefault(type)?.Value
-			?? throw new NotSupportedException($"No SingleFrameStrategy defined for Fitness Machine Type: {type}");
 
 	private static SingleFrameStrategy CreateThreadmillStrategy() => new()
 	{

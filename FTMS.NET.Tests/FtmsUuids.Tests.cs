@@ -2,7 +2,7 @@
 
 using System;
 
-public class FtmsUuids_Tests
+public sealed class FtmsUuids_Tests
 {
 	public static readonly TheoryData<Guid, string> UuidTestData = new()
 	{
