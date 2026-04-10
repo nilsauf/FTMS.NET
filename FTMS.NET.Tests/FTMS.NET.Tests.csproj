@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FTMS.NET.Contracts\FTMS.NET.Contracts.csproj" />
     <ProjectReference Include="..\FTMS.NET\FTMS.NET.csproj" />
   </ItemGroup>
 

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	
+
   <ItemGroup>
-    <ProjectReference Include="..\FTMS.NET.Contracts\FTMS.NET.Contracts.csproj" />
+  	<PackageReference Include="DynamicData" Version="9.4.31" />
   </ItemGroup>
 	
   <ItemGroup>

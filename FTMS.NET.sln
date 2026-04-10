@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11626.88 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B233E0EF-55C6-48CC-83C1-F72962EF8EEF}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,8 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTMS.NET.Contracts", "FTMS.NET.Contracts\FTMS.NET.Contracts.csproj", "{3B09D463-F2C2-4C0A-9F2B-BE16A5CF3C69}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTMS.NET", "FTMS.NET\FTMS.NET.csproj", "{6407016E-950F-4AFB-8706-C09F76595C21}"
 EndProject
@@ -42,10 +40,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3B09D463-F2C2-4C0A-9F2B-BE16A5CF3C69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B09D463-F2C2-4C0A-9F2B-BE16A5CF3C69}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B09D463-F2C2-4C0A-9F2B-BE16A5CF3C69}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B09D463-F2C2-4C0A-9F2B-BE16A5CF3C69}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6407016E-950F-4AFB-8706-C09F76595C21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6407016E-950F-4AFB-8706-C09F76595C21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6407016E-950F-4AFB-8706-C09F76595C21}.Release|Any CPU.ActiveCfg = Release|Any CPU
