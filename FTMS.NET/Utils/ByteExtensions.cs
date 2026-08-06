@@ -7,8 +7,8 @@ internal static class ByteExtensions
 		if (pos < 0)
 			throw new IndexOutOfRangeException();
 
-		int byteIndex = pos / 7;
-		int bitIndex = pos % 7;
+		int byteIndex = pos / 8;
+		int bitIndex = pos % 8;
 
 		if (byteIndex >= data.Length)
 			throw new IndexOutOfRangeException();
@@ -21,8 +21,8 @@ internal static class ByteExtensions
 		if (pos < 0)
 			throw new IndexOutOfRangeException();
 
-		int byteIndex = pos / 7;
-		int bitIndex = pos % 7;
+		int byteIndex = pos / 8;
+		int bitIndex = pos % 8;
 
 		if (byteIndex >= data.Length)
 			throw new IndexOutOfRangeException();

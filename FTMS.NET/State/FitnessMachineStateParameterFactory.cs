@@ -49,7 +49,7 @@ public static class FitnessMachineStateParameterFactory
 		=> new("Target Speed", FitnessMachineUnit.KilometersPerHour, BitConverter.ToUInt16(rawData) * 0.01);
 
 	private static FitnessMachineStateParameter ReadTargetIncline(byte[] rawData)
-		=> new("Target Incline", FitnessMachineUnit.Percent, BitConverter.ToUInt16(rawData) * 0.1);
+		=> new("Target Incline", FitnessMachineUnit.Percent, BitConverter.ToInt16(rawData) * 0.1);
 
 	private static FitnessMachineStateParameter ReadTargetResistanceLevel(byte[] rawData)
 		=> new("Target Resistance Level", FitnessMachineUnit.None, rawData[0]);
@@ -70,7 +70,7 @@ public static class FitnessMachineStateParameterFactory
 		=> new("Targeted Number Of Strides", FitnessMachineUnit.Stride, BitConverter.ToUInt16(rawData));
 
 	private static FitnessMachineStateParameter ReadTargetedDistance(byte[] rawData)
-		=> new("Targeted Distance", FitnessMachineUnit.Meters, new UInt24(BitConverter.ToUInt16(rawData)));
+		=> new("Targeted Distance", FitnessMachineUnit.Meters, new UInt24(rawData[0], rawData[1], rawData[2]));
 
 	private static FitnessMachineStateParameter ReadTargetedTrainingTime(byte[] rawData)
 		=> new("Targeted Training Time", FitnessMachineUnit.Seconds, BitConverter.ToUInt16(rawData));

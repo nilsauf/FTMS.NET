@@ -3,8 +3,8 @@
 using System.Collections.Immutable;
 
 internal sealed record FitnessMachineState(
-		EStateOpCode OpCode, 
-		byte[] RawData) 
+		EStateOpCode OpCode,
+		byte[] RawData)
 	: IFitnessMachineState
 {
 	private IImmutableList<object>? parameters;

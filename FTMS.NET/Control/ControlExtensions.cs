@@ -112,9 +112,12 @@ public static class ControlExtensions
 
 		byte[] GetBytes()
 		{
+			if (value is UInt24 u24)
+				return u24.GetBytes();
+
 			if (typeof(T).IsPrimitive)
 			{
-				int size = Marshal.SizeOf<T>();
+				int size = Unsafe.SizeOf<T>();
 				byte[] bytes = new byte[size];
 				Unsafe.As<byte, T>(ref bytes[0]) = value;
 				return bytes;

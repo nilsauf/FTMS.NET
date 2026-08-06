@@ -26,7 +26,7 @@ internal sealed class SingleFrameReader : IDisposable
 			.Where(rule => flagFields.IsBitSet(rule.BitPosition) == rule.CheckIfBitIsSet)
 			.Select(rule =>
 			{
-                long readValue = ReadValue(rule.RawValueType);
+				long readValue = ReadValue(rule.RawValueType);
 				double calculatedValue = rule.Calculation.Calculate(readValue);
 				return new FitnessMachineValue(
 					rule.ValueUuid,
@@ -34,21 +34,21 @@ internal sealed class SingleFrameReader : IDisposable
 					FtmsUuids.GetName(rule.ValueUuid));
 			})];
 
-        long ReadValue(RawValueType rawValueType) => rawValueType switch
-        {
-            RawValueType.Byte => this.dataReader.ReadByte(),
-            RawValueType.SByte => this.dataReader.ReadSByte(),
-            RawValueType.Short => this.dataReader.ReadInt16(),
-            RawValueType.UShort => this.dataReader.ReadUInt16(),
-            RawValueType.Int => this.dataReader.ReadInt32(),
-            RawValueType.UInt => this.dataReader.ReadUInt32(),
-            //RawValueType.Long => this.dataReader.ReadInt64(),
-            //RawValueType.ULong => (long)this.dataReader.ReadUInt64(),
-            //RawValueType.Float => (long)this.dataReader.ReadSingle(),
-            //RawValueType.Double => (long)this.dataReader.ReadDouble(),
-            RawValueType.UInt24 => this.ReadUInt24(),
-            _ => throw new NotSupportedException($"Unsupported RawValueType: {rawValueType}")
-        };
+		long ReadValue(RawValueType rawValueType) => rawValueType switch
+		{
+			RawValueType.Byte => this.dataReader.ReadByte(),
+			RawValueType.SByte => this.dataReader.ReadSByte(),
+			RawValueType.Short => this.dataReader.ReadInt16(),
+			RawValueType.UShort => this.dataReader.ReadUInt16(),
+			RawValueType.Int => this.dataReader.ReadInt32(),
+			RawValueType.UInt => this.dataReader.ReadUInt32(),
+			//RawValueType.Long => this.dataReader.ReadInt64(),
+			//RawValueType.ULong => (long)this.dataReader.ReadUInt64(),
+			//RawValueType.Float => (long)this.dataReader.ReadSingle(),
+			//RawValueType.Double => (long)this.dataReader.ReadDouble(),
+			RawValueType.UInt24 => this.ReadUInt24(),
+			_ => throw new NotSupportedException($"Unsupported RawValueType: {rawValueType}")
+		};
 	}
 
 	private UInt24 ReadUInt24()

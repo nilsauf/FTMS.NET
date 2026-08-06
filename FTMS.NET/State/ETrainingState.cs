@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET.State;
+
 public enum ETrainingState : byte
 {
 	Other = 0x00,

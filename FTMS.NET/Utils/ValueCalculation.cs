@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET.Utils;
+
 using System;
 
 internal sealed record ValueCalculation(int Multiplier = 1, int DecimalExponent = 0, int BinaryExponent = 0)

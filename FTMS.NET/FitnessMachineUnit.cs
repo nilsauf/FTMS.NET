@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET;
+
 public enum FitnessMachineUnit
 {
 	None,

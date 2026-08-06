@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET.Features;
+
 public interface ISupportedRange
 {
 	double MinimumValue { get; }

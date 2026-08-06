@@ -13,22 +13,22 @@ internal sealed class SingleFrameStrategy
 
 internal enum RawValueType
 {
-    Byte,
-    SByte,
-    Short,
-    UShort,
-    Int,
-    UInt,
-    UInt24,
-    Long,
-    ULong,
-    Float,
-    Double
+	Byte,
+	SByte,
+	Short,
+	UShort,
+	Int,
+	UInt,
+	UInt24,
+	Long,
+	ULong,
+	Float,
+	Double
 }
 
 internal sealed record SingleValueRule(
-    Guid ValueUuid,
-    bool CheckIfBitIsSet,
-    int BitPosition,
-    RawValueType RawValueType,
-    ValueCalculation Calculation);
+	Guid ValueUuid,
+	bool CheckIfBitIsSet,
+	int BitPosition,
+	RawValueType RawValueType,
+	ValueCalculation Calculation);

@@ -52,6 +52,8 @@ public readonly struct UInt24 : IEquatable<UInt24>, IComparable<UInt24>/*, INumb
 	private int SignedValue => this.b0 | this.b1 << 8 | this.b2 << 16;
 	public uint Value => (uint)this.SignedValue;
 
+	public byte[] GetBytes() => [this.b0, this.b1, this.b2];
+
 	//
 
 	#region Struct Tedium + IEquatable<UInt24> + IComparable<UInt24>
