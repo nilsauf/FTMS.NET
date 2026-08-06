@@ -90,7 +90,7 @@ public static class FitnessMachineServiceFactory
 		var featureData = await featureCharacteristic.ReadValueAsync();
 		var featureDataSpan = featureData.AsSpan();
 
-		return new FitnessMachineFeatures(featureDataSpan[..4], featureDataSpan[5..])
+		return new FitnessMachineFeatures(featureDataSpan[..4], featureDataSpan[4..])
 		{
 			SpeedRange = await ReadSupportedRangeAsync(FtmsUuids.SupportedSpeedRange, SupportedRange.ReadSpeed),
 			InclinationRange = await ReadSupportedRangeAsync(FtmsUuids.SupportedInclinationRange, SupportedRange.ReadInclination),
