@@ -40,9 +40,8 @@ public static class FitnessMachineServiceFactory
 		var fitnessMachineDataReader = fitnessMachineType.GetDataReader();
 
 		var dataCharacteristicId = fitnessMachineType.GetDataCharacteristicId();
-		var dataCharacteristic = await connection.GetCharacteristicAsync(dataCharacteristicId);
+		var dataCharacteristic = await connection.GetRequiredCharacteristic(dataCharacteristicId);
 
-		dataCharacteristic.EnsureAvailabieCharacteristic(dataCharacteristicId);
 		return new FitnessMachineData(dataCharacteristic.ObserveValue(), fitnessMachineDataReader);
 	}
 
@@ -84,8 +83,7 @@ public static class FitnessMachineServiceFactory
 	public static async Task<IFitnessMachineFeatures> ReadFitnessMachineFeaturesAsync(
 		this IFitnessMachineServiceConnection connection)
 	{
-		var featureCharacteristic = await connection.GetCharacteristicAsync(FtmsUuids.Feature);
-		featureCharacteristic.EnsureAvailabieCharacteristic(FtmsUuids.Feature);
+		var featureCharacteristic = await connection.GetRequiredCharacteristic(FtmsUuids.Feature);
 
 		var featureData = await featureCharacteristic.ReadValueAsync();
 		var featureDataSpan = featureData.AsSpan();
@@ -113,7 +111,16 @@ public static class FitnessMachineServiceFactory
 		}
 	}
 
-	public static void EnsureAvailabieCharacteristic(
+	private static async Task<IFitnessMachineCharacteristic> GetRequiredCharacteristic(
+		this IFitnessMachineServiceConnection connection,
+		Guid characteristicUuid)
+	{
+		var characteristic = await connection.GetCharacteristicAsync(characteristicUuid);
+		characteristic.EnsureAvailableCharacteristic(characteristicUuid);
+		return characteristic;
+	}
+
+	private static void EnsureAvailableCharacteristic(
 		[NotNull] this IFitnessMachineCharacteristic? characteristic,
 		Guid characteristicUuid)
 	{
