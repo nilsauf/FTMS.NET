@@ -14,18 +14,23 @@ internal sealed class FitnessMachineControl : IFitnessMachineControl
 	private readonly Func<byte[], Task> writeControlPoint;
 	private readonly CancellationDisposable cancellationDisposable = new();
 	private readonly IObservable<ControlResponse> responseObservable;
+	private readonly TimeSpan responseTimeout;
+	private readonly IScheduler scheduler;
 
 	internal FitnessMachineControl(
 		IObservable<byte[]> observeControlPoint,
 		Func<byte[], Task> writeControlPoint,
+		TimeSpan? responseTimeout = null,
 		IScheduler? scheduler = null)
 	{
 		this.writeControlPoint = writeControlPoint;
+		this.scheduler = scheduler ?? DefaultScheduler.Instance;
+		this.responseTimeout = responseTimeout ?? TimeSpan.FromSeconds(5);
 		this.responseObservable = observeControlPoint
 			.TakeUntil(this.cancellationDisposable.Token)
 			.Select(this.ReadResponseData)
 			.Publish()
-			.RefCount(TimeSpan.FromSeconds(5), scheduler ?? DefaultScheduler.Instance);
+			.RefCount(TimeSpan.FromSeconds(5), this.scheduler);
 	}
 
 	public async Task<ControlResponse> Execute(ControlRequest request)
@@ -34,6 +39,7 @@ internal sealed class FitnessMachineControl : IFitnessMachineControl
 
 		var responseTask = this.responseObservable
 			.FirstAsync(response => response.RequestedOpCode == request.OpCode)
+			.Timeout(this.responseTimeout, this.scheduler)
 			.ToTask();
 
 		byte[] writeValue = [(byte)request.OpCode, .. request.Parameter];
