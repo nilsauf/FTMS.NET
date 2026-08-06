@@ -117,7 +117,7 @@ public static class ControlExtensions
 
 			if (typeof(T).IsPrimitive)
 			{
-				int size = Marshal.SizeOf<T>();
+				int size = Unsafe.SizeOf<T>();
 				byte[] bytes = new byte[size];
 				Unsafe.As<byte, T>(ref bytes[0]) = value;
 				return bytes;
