@@ -112,6 +112,9 @@ public static class ControlExtensions
 
 		byte[] GetBytes()
 		{
+			if (value is UInt24 u24)
+				return [(byte)u24.Value, (byte)(u24.Value >> 8), (byte)(u24.Value >> 16)];
+
 			if (typeof(T).IsPrimitive)
 			{
 				int size = Marshal.SizeOf<T>();
