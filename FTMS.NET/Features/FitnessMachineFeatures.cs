@@ -5,7 +5,7 @@ using System;
 
 internal sealed class FitnessMachineFeatures(
 		ReadOnlySpan<byte> featuresField,
-		ReadOnlySpan<byte> targetSettingsField) 
+		ReadOnlySpan<byte> targetSettingsField)
 	: IFitnessMachineFeatures
 {
 	public bool AverageSpeedSupported { get; } = featuresField.IsBitSet(0);

@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET.Control;
+
 public enum EControlResultCode : byte
 {
 	Success = 0x01,

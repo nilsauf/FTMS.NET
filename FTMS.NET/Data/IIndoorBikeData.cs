@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET.Data;
+
 public interface IIndoorBikeData : IFitnessMachineData
 {
 	IFitnessMachineValue? InstantaneousSpeed { get; }

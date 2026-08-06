@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET.Exceptions;
+
 using System;
 
 public sealed class FitnessMachineNotAvailableException()

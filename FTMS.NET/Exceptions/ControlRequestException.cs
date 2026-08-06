@@ -4,7 +4,7 @@ using FTMS.NET.Control;
 using System;
 
 public sealed class ControlRequestException(
-		EControlOpCode opCode, 
+		EControlOpCode opCode,
 		Exception? innerException = null)
 	: Exception("Control Request could not be executed.", innerException)
 {

@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET.Features;
+
 public interface IFitnessMachineFeatures
 {
 	bool AverageSpeedSupported { get; }

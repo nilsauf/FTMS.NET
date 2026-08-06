@@ -1,4 +1,5 @@
 ﻿namespace FTMS.NET.State;
+
 public enum EStateOpCode : byte
 {
 	Reset = 0x01,
