@@ -113,7 +113,7 @@ public static class ControlExtensions
 		byte[] GetBytes()
 		{
 			if (value is UInt24 u24)
-				return [(byte)u24.Value, (byte)(u24.Value >> 8), (byte)(u24.Value >> 16)];
+				return u24.GetBytes();
 
 			if (typeof(T).IsPrimitive)
 			{
