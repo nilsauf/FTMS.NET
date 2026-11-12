@@ -10,9 +10,9 @@ FTMS.NET is a .NET client library for the Bluetooth LE **Fitness Machine Service
 
 ## Build & test
 
-Both projects multi-target `net8.0;net9.0;net10.0` (set in `Directory.Build.props`), so a bare `dotnet test` runs the suite three times.
+Both projects multi-target `net10.0;net11.0` (set in `Directory.Build.props`), so a bare `dotnet test` runs the suite twice.
 
-- Fast, focused verification: `dotnet test -f net10.0` (or `dotnet build -f net10.0`).
+- Fast, focused verification: `dotnet test -f net11.0` (or `dotnet build -f net11.0`).
 - No lint/format script exists; style is enforced by `.editorconfig` via `dotnet format`.
 - `dotnet pack` produces the NuGet package; the version is derived from git by GitVersion (GitHubFlow, `main` label `alpha`) — never hand-edit version numbers.
 
